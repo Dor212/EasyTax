@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Layout/Header";
+import CookieConsentBanner from "./components/Cookies/CookieConsentBanner";
+import FloatingActions from "./components/UI/FloatingActions";
 import HomePage from "./Pages/HomePage";
 import LegalPage from "./Pages/LegalPage/LegalPage";
 import Footer from "./components/Layout/Footer";
-import FloatingActions from "./components/UI/FloatingActions";
-import CookieConsentBanner from "./components/Cookies/CookieConsentBanner";
+
 
 const ACCENT = "#5BA14D" as const;
 const TEXT = "#3A3A4A" as const;

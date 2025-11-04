@@ -7,6 +7,7 @@ import HowItWorksSection from "../components/Sections/HowItWorksSection";
 import QuestionnaireSection from "../components/Sections/QuestionnaireSectio";
 import FaqSection from "../components/Sections/FaqSection";
 
+
 type SectionProps = {
     id: string;
     children: React.ReactNode;

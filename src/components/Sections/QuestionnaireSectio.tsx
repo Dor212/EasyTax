@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaWhatsapp } from "react-icons/fa";
 
 const ACCENT = "#5BA14D";
 const TEXT = "#3A3A4A";
-const TARGET_WHATSAPP_NUMBER = "9725XXXXXXXX";
+const TARGET_WHATSAPP_NUMBER = "9725XXXXXXXX"; // 🔹 עדכן כאן את מספר הוואטסאפ (בלי 0)
 
 type QuestionnaireFormValues = {
     q1: "yes" | "no" | "";
@@ -17,6 +17,8 @@ type QuestionnaireFormValues = {
     fullName: string;
     phone: string;
 };
+
+type QuestionKey = "q1" | "q2" | "q3" | "q4" | "q5" | "q6";
 
 export default function QuestionnaireSection() {
     const [currentStep, setCurrentStep] = useState(0);
@@ -54,13 +56,13 @@ export default function QuestionnaireSection() {
 
     const isLowScore = score !== null && score <= 1;
 
-    const questionSteps = [
+    const questionSteps: QuestionKey[][] = [
         ["q1", "q2"],
         ["q3", "q4"],
         ["q5", "q6"],
     ];
 
-    const questions: Record<string, string> = {
+    const questions: Record<QuestionKey, string> = {
         q1: "עבדת בשני מקומות עבודה או יותר באותה שנת מס?",
         q2: "שינית מקום עבודה או הפסקת לעבוד במהלך אחת מ־6 השנים האחרונות?",
         q3: "יש לך ילדים עד גיל 18?",
@@ -71,12 +73,12 @@ export default function QuestionnaireSection() {
 
     const handleNext = async () => {
         if (currentStep <= 2) {
-            const valid = await trigger(questionSteps[currentStep] as any);
+            const valid = await trigger(questionSteps[currentStep]);
             if (!valid) return;
 
             if (currentStep === 2) {
                 const vals = getValues();
-                const yesCount = (["q1", "q2", "q3", "q4", "q5", "q6"] as const).reduce(
+                const yesCount = (["q1", "q2", "q3", "q4", "q5", "q6"] as QuestionKey[]).reduce(
                     (acc, key) => (vals[key] === "yes" ? acc + 1 : acc),
                     0
                 );
@@ -89,7 +91,7 @@ export default function QuestionnaireSection() {
     const handlePrev = () => setCurrentStep((s) => Math.max(0, s - 1));
 
     const onSubmit = (data: QuestionnaireFormValues) => {
-        const yesCount = (["q1", "q2", "q3", "q4", "q5", "q6"] as const).reduce(
+        const yesCount = (["q1", "q2", "q3", "q4", "q5", "q6"] as QuestionKey[]).reduce(
             (acc, key) => (data[key] === "yes" ? acc + 1 : acc),
             0
         );
@@ -152,7 +154,7 @@ export default function QuestionnaireSection() {
                                                         <input
                                                             type="radio"
                                                             value="yes"
-                                                            {...register(key as any, { required: true })}
+                                                            {...register(key, { required: true })}
                                                             className="accent-[#5BA14D]"
                                                         />
                                                         <span>כן</span>
@@ -161,7 +163,7 @@ export default function QuestionnaireSection() {
                                                         <input
                                                             type="radio"
                                                             value="no"
-                                                            {...register(key as any, { required: true })}
+                                                            {...register(key, { required: true })}
                                                             className="accent-[#5BA14D]"
                                                         />
                                                         <span>לא</span>

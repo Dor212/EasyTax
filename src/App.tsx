@@ -2,10 +2,13 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Layout/Header";
 import CookieConsentBanner from "./components/Cookies/CookieConsentBanner";
-import FloatingActions from "./components/UI/FloatingActions";
 import HomePage from "./Pages/HomePage";
 import LegalPage from "./Pages/LegalPage/LegalPage";
 import Footer from "./components/Layout/Footer";
+import SocialButtons from "./components/UI/SocialButtons";
+import FloatingButtons from "./components/UI/FloatingButtons";
+
+
 
 
 const ACCENT = "#5BA14D" as const;
@@ -34,7 +37,8 @@ function App() {
                 />
                 <Header />
                 <CookieConsentBanner />
-                <FloatingActions />
+                <SocialButtons />
+                <FloatingButtons />
                 <main id="home">
                     <Routes>
                         <Route path="/" element={<HomePage />} />

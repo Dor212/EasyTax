@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ACCENT = "#5BA14D";
+const ACCENT = "#7CE86A";
 const TEXT = "#3A3A4A";
 
 type FaqItem = {
@@ -119,7 +119,7 @@ export default function FaqSection() {
     return (
         <section
             id="faq"
-            className="w-full px-4 py-16 bg-transparent sm:px-6"
+            className="w-full px-4 py-16 sm:px-6 bg-[rgba(124,232,106,0.06)]"
             dir="rtl"
         >
             <div className="max-w-5xl mx-auto">
@@ -130,13 +130,24 @@ export default function FaqSection() {
                     className="mb-8 text-center"
                 >
                     <h2
-                        className="mb-3 text-2xl font-bold sm:text-3xl"
+                        className="mb-3 text-2xl sm:text-3xl md:text-4xl font-[Heebo] leading-tight"
                         style={{ color: TEXT }}
                     >
-                        שאלות נפוצות על החזרי מס
+                        <span className="relative inline-block px-1">
+                            <span className="relative z-10">שאלות נפוצות על החזרי מס</span>
+                            <span
+                                className="absolute left-0 right-0 -bottom-1 h-[3px] rounded-full"
+                                style={{ background: "rgba(124,232,106,0.7)" }}
+                            />
+                        </span>
                     </h2>
-                    <p className="text-sm text-gray-700 sm:text-base">
-                        כדי שתקבלו החלטה בראש שקט, ריכזנו את השאלות שהכי הרבה ישראלים שואלים לפני הגשת בקשה.
+                    <p
+                        className="text-sm sm:text-[15px] font-[Heebo] max-w-2xl mx-auto leading-7"
+                        style={{ color: TEXT }}
+                    >
+                        כדי שתקבלו החלטה בראש שקט.
+                        <br />
+                        ריכזנו את השאלות שהכי הרבה ישראלים שואלים לפני הגשת בקשה להחזר מס.
                     </p>
                 </motion.div>
 
@@ -147,10 +158,10 @@ export default function FaqSection() {
                         transition={{ duration: 0.5 }}
                         className="relative"
                     >
-                        <div className="absolute hidden right-4 top-5 bottom-5 md:block">
-                            <div className="w-px h-full bg-[rgba(91,161,77,0.25)]" />
+                        <div className="absolute hidden right-5 top-3 bottom-3 md:block">
+                            <div className="w-px h-full bg-[rgba(124,232,106,0.25)]" />
                         </div>
-                        <div className="space-y-6">
+                        <div className="space-y-5">
                             {GROUPS.map((group, index) => {
                                 const isActive = group.id === activeGroupId;
                                 return (
@@ -162,24 +173,27 @@ export default function FaqSection() {
                                             }`}
                                     >
                                         <div className="relative flex flex-col items-center flex-shrink-0 md:items-end">
-                                            <div className="hidden h-3 md:block" />
+                                            <div className="hidden h-2 md:block" />
                                             <motion.div
-                                                className="flex items-center justify-center border rounded-full"
+                                                className="flex items-center justify-center border rounded-full shadow-sm"
                                                 style={{
                                                     borderColor: isActive
                                                         ? ACCENT
-                                                        : "rgba(91,161,77,0.35)",
+                                                        : "rgba(124,232,106,0.4)",
                                                     backgroundColor: isActive
-                                                        ? "rgba(91,161,77,0.12)"
-                                                        : "white",
-                                                    width: isActive ? 28 : 22,
-                                                    height: isActive ? 28 : 22,
+                                                        ? "rgba(124,232,106,0.12)"
+                                                        : "#ffffff",
+                                                    width: isActive ? 30 : 24,
+                                                    height: isActive ? 30 : 24,
+                                                    boxShadow: isActive
+                                                        ? "0 0 16px rgba(124,232,106,0.6)"
+                                                        : "0 4px 10px rgba(15,23,42,0.08)",
                                                 }}
                                                 layout
                                                 transition={{ type: "spring", stiffness: 260, damping: 20 }}
                                             >
                                                 <span
-                                                    className="text-xs font-semibold"
+                                                    className="text-xs font-[Heebo] font-semibold"
                                                     style={{ color: TEXT }}
                                                 >
                                                     {index + 1}
@@ -188,12 +202,12 @@ export default function FaqSection() {
                                         </div>
                                         <div className="flex-1 text-right">
                                             <p
-                                                className="text-sm font-semibold sm:text-base"
+                                                className="text-sm sm:text-base font-[Heebo] font-semibold"
                                                 style={{ color: TEXT }}
                                             >
                                                 {group.title}
                                             </p>
-                                            <p className="mt-1 text-xs text-gray-600 sm:text-sm">
+                                            <p className="mt-1 text-xs sm:text-sm font-[Heebo] text-gray-600">
                                                 {group.subtitle}
                                             </p>
                                         </div>
@@ -208,22 +222,22 @@ export default function FaqSection() {
                         initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4 }}
-                        className="bg-white border border-[rgba(91,161,77,0.22)] rounded-2xl p-5 sm:p-7 shadow-[0_18px_60px_rgba(0,0,0,0.04)]"
+                        className="bg-white/95 backdrop-blur-sm border border-[rgba(124,232,106,0.3)] rounded-2xl p-5 sm:p-7 shadow-[0_18px_60px_rgba(15,23,42,0.10)]"
                     >
                         <div className="flex items-center justify-between mb-4">
                             <div className="text-right">
-                                <p className="text-xs font-semibold tracking-wide text-[rgba(91,161,77,0.9)]">
+                                <p className="text-[11px] font-[Heebo] font-semibold tracking-wide text-[rgba(124,232,106,0.95)]">
                                     תחנה במסלול החזר המס
                                 </p>
                                 <h3
-                                    className="mt-1 text-lg font-bold sm:text-xl"
+                                    className="mt-1 text-lg sm:text-xl font-[Heebo] font-bold"
                                     style={{ color: TEXT }}
                                 >
-                                    {
-                                        GROUPS.find((g) => g.id === activeGroupId)
-                                            ?.title
-                                    }
+                                    {GROUPS.find((g) => g.id === activeGroupId)?.title}
                                 </h3>
+                                <p className="mt-1 text-xs sm:text-sm font-[Heebo] text-gray-600">
+                                    {GROUPS.find((g) => g.id === activeGroupId)?.subtitle}
+                                </p>
                             </div>
                         </div>
 
@@ -239,8 +253,8 @@ export default function FaqSection() {
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: -8 }}
                                             transition={{ duration: 0.2 }}
-                                            className={`rounded-xl border text-right ${isOpen
-                                                    ? "border-[rgba(91,161,77,0.5)] bg-[rgba(91,161,77,0.03)]"
+                                            className={`rounded-2xl border text-right ${isOpen
+                                                    ? "border-[rgba(124,232,106,0.6)] bg-[rgba(124,232,106,0.03)] shadow-[0_10px_30px_rgba(15,23,42,0.08)]"
                                                     : "border-gray-200 bg-white"
                                                 }`}
                                         >
@@ -250,14 +264,14 @@ export default function FaqSection() {
                                                 className="flex w-full items-center justify-between px-4 py-3 sm:px-5 sm:py-3.5"
                                             >
                                                 <span
-                                                    className="text-sm font-medium sm:text-base"
+                                                    className="text-sm sm:text-base font-[Heebo] font-medium"
                                                     style={{ color: TEXT }}
                                                 >
                                                     {item.question}
                                                 </span>
                                                 <span
                                                     className={`ml-3 inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold transition-transform ${isOpen
-                                                            ? "bg-[rgba(91,161,77,0.12)] text-[rgba(91,161,77,0.95)] rotate-180"
+                                                            ? "bg-[rgba(124,232,106,0.16)] text-[rgba(124,232,106,0.95)] rotate-180"
                                                             : "bg-gray-100 text-gray-600"
                                                         }`}
                                                 >
@@ -273,8 +287,10 @@ export default function FaqSection() {
                                                         exit={{ opacity: 0, height: 0 }}
                                                         transition={{ duration: 0.22 }}
                                                     >
-                                                        <div className="px-4 pb-4 text-xs leading-relaxed text-gray-700 sm:px-5 sm:pb-5 sm:text-sm">
-                                                            {item.answer}
+                                                        <div className="px-4 pb-4 sm:px-5 sm:pb-5">
+                                                            <p className="text-xs sm:text-sm font-[Heebo] leading-relaxed text-gray-700">
+                                                                {item.answer}
+                                                            </p>
                                                         </div>
                                                     </motion.div>
                                                 )}

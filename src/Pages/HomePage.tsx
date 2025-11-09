@@ -6,6 +6,7 @@ import EligibilitySection from "../components/Sections/EligibilitySection";
 import HowItWorksSection from "../components/Sections/HowItWorksSection";
 import QuestionnaireSection from "../components/Sections/QuestionnaireSectio";
 import FaqSection from "../components/Sections/FaqSection";
+import WhoIsEligibleSection from "../components/Sections/WhoIsEligibleSection";
 
 
 type SectionProps = {
@@ -192,11 +193,11 @@ export default function HomePage({ logoSrc = "/ETLogo.png" }: HomePageProps) {
                         url: SITE_URL,
                         logo: OG_IMAGE,
                         sameAs: [
-                            "https://www.instagram.com/YOUR_PROFILE", // 🔹 עדכן לפרופיל אינסטגרם
+                            "https://www.instagram.com/easy.tax.il/",
                         ],
                         contactPoint: {
                             "@type": "ContactPoint",
-                            telephone: "+972-5X-XXXXXXX", // 🔹 עדכן טלפון אמיתי
+                            telephone: "+972-50-2018741", 
                             contactType: "customer service",
                             areaServed: "IL",
                             availableLanguage: ["Hebrew"],
@@ -216,6 +217,10 @@ export default function HomePage({ logoSrc = "/ETLogo.png" }: HomePageProps) {
 
             <Section id="eligibility">
                 <EligibilitySection />
+            </Section>
+            
+            <Section id="who-is-eligible">
+                <WhoIsEligibleSection />
             </Section>
 
             <Section id="how-it-works">

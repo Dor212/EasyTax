@@ -40,24 +40,16 @@ const Header: React.FC = () => {
                         alt="EasyTax Logo"
                         className="object-contain w-auto h-8"
                     />
-                    <span
-                        className="hidden px-2 py-0.5 text-[0.7rem] font-medium rounded-full sm:inline-flex"
-                        style={{
-                            backgroundColor: "rgba(91,161,77,0.08)",
-                            color: ACCENT,
-                        }}
-                    >
-                        החזרי מס
-                    </span>
+                
                 </button>
 
                 <nav className="items-center hidden gap-6 md:flex">
                     <button
                         type="button"
-                        onClick={() => handleNavClick("/#eligibility")}
+                        onClick={() => handleNavClick("/#who-is-eligible")}
                         className={`${navLinkBase} text-[color:var(--text)]/80 hover:text-[color:var(--text)] hover:border-[rgba(91,161,77,0.9)]`}
                     >
-                        בדיקת זכאות
+                        מי זכאי 
                     </button>
                     <button
                         type="button"

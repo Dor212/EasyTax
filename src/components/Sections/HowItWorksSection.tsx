@@ -6,7 +6,7 @@ type HowItWorksSectionProps = {
     className?: string;
 };
 
-const ACCENT = "#5BA14D" as const;
+const ACCENT = "#7CE86A" as const;
 const TEXT = "#3A3A4A" as const;
 
 const easeCurve = [0.22, 1, 0.36, 1] as const;
@@ -28,74 +28,141 @@ type Step = {
     title: string;
     description: string;
     tag?: string;
+    iconSrc: string;
 };
 
 const STEPS: Step[] = [
     {
-        title: "ממלאים פרטים בסיסיים",
+        title: "ממלאים כמה פרטים",
         description:
-            "כמה שאלות קצרות עליך ועל שנות העבודה האחרונות – בלי מסמכים ובלי התחייבות.",
+            "עונים על כמה שאלות קצרות עליך ועל שנות העבודה האחרונות. בלי מסמכים, בלי התחייבות.",
         tag: "פחות מדקה",
+        iconSrc: `${import.meta.env.BASE_URL}icons/step1.gif`,
     },
     {
-        title: "אלגוריתם הזכאות שלנו נכנס לפעולה",
+        title: "המערכת של EasyTax מנתחת עבורך",
         description:
-            "המערכת מנתחת את הנתונים שלך מול נקודות זיכוי, מדרגות מס והטבות רלוונטיות.",
+            "האלגוריתם בודק את הנתונים שלך מול מדרגות מס, נקודות זיכוי וכל ההטבות הרלוונטיות.",
         tag: "בדיקה חכמה",
+        iconSrc: `${import.meta.env.BASE_URL}icons/step2.gif`,
     },
     {
-        title: "מקבלים הערכת החזר בזמן אמת",
+        title: "מקבלים תמונת מצב ראשונית",
         description:
-            "תראה האם יש לך פוטנציאל להחזר מס ובאיזה סדר גודל – לפני שמתחילים תהליך מלא.",
+            "אתה רואה אם יש לך פוטנציאל להחזר מס ובאיזה סדר גודל עוד לפני שמתחייבים על תהליך מלא.",
         tag: "שקיפות מלאה",
+        iconSrc: `${import.meta.env.BASE_URL}icons/step3.gif`,
     },
     {
         title: "אנחנו מגישים בשבילך את הבקשה",
         description:
-            "אם יש זכאות, אנחנו מלווים אותך בהגשה מסודרת מול רשות המסים עד שתקבל את הכסף לחשבון.",
-        tag: "ליווי עד הסוף",
+            "אם יש זכאות, אנחנו מטפלים בכל הבירוקרטיה מול רשות המסים עד שהכסף נכנס לחשבון הבנק שלך.",
+        tag: "ליווי עד הכסף",
+        iconSrc: `${import.meta.env.BASE_URL}icons/step4.gif`,
     },
 ];
-
-function StepPill({ index }: { index: number }) {
-    const stepNumber = index + 1;
-    return (
-        <div className="relative flex items-center justify-center">
-            <div
-                className="flex items-center justify-center w-8 h-8 text-xs font-bold border-2 rounded-full"
-                style={{ borderColor: ACCENT, color: ACCENT }}
-            >
-                {stepNumber}
-            </div>
-        </div>
-    );
-}
 
 type StepCardProps = {
     step: Step;
     index: number;
-    align?: "top" | "right" | "bottom" | "left";
 };
 
-function StepCard({ step, index, align = "right" }: StepCardProps) {
-    const baseAlign =
-        align === "right"
-            ? "items-end text-right"
-            : align === "left"
-                ? "items-start text-right"
-                : "items-center text-right";
-
+function StepCard({ step, index }: StepCardProps) {
     return (
-        <div
-            className={`flex flex-col gap-2 rounded-2xl bg-white/90 backdrop-blur-sm px-4 py-4 shadow-[0_12px_35px_rgba(15,23,42,0.14)] border border-white/70 ${baseAlign}`}
+        <motion.li
+            variants={fadeUp}
+            custom={index + 2}
+            className="relative rounded-2xl backdrop-blur-sm px-5 py-6 shadow-[0_16px_40px_rgba(15,23,42,0.12)] border border-white/40 overflow-hidden"
+            style={{
+                background: "rgba(124, 232, 106, 0.18)",
+            }}
         >
-            <div className="flex items-center justify-between w-full gap-3">
-                <StepPill index={index} />
+            {/* בורדר מסתובב */}
+            <motion.div
+                className="absolute inset-0 pointer-events-none rounded-2xl"
+                style={{
+                    padding: "3px",
+                    background: `conic-gradient(
+                        from 180deg,
+                        rgba(124,232,106,0),
+                        rgba(124,232,106,0.9),
+                        rgba(124,232,106,0)
+                    )`,
+                    WebkitMask:
+                        "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+                    WebkitMaskComposite: "xor",
+                    maskComposite: "exclude",
+                }}
+                animate={{ rotate: index % 2 === 0 ? 360 : -360 }}
+                transition={{
+                    duration: 6 + index * 0.7,
+                    ease: "linear",
+                    repeat: Infinity,
+                }}
+            />
+
+            {/* הבהוב Glow פנימי דינמי */}
+            <motion.div
+                className="absolute inset-0 pointer-events-none rounded-2xl"
+                style={{
+                    boxShadow: `0 0 25px 3px rgba(124,232,106,0.45) inset`,
+                }}
+                animate={{
+                    opacity: [0.4, 0.8, 0.4],
+                    scale: [1, 1.02, 1],
+                }}
+                transition={{
+                    duration: 3.5 + index * 0.4,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                }}
+            />
+
+            <div className="relative z-10 flex flex-col items-center text-center">
+                <div className="mb-4">
+                    <div className="relative grid place-items-center size-20 sm:size-22 md:size-24">
+                        <div className="relative size-[78%] rounded-full bg-white/95 backdrop-blur-[4px] shadow-md flex items-center justify-center">
+                            <img
+                                src={step.iconSrc}
+                                alt={step.title}
+                                className="object-contain w-10 h-10 sm:w-11 sm:h-11"
+                                loading="lazy"
+                            />
+                        </div>
+                        <div
+                            className="absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full px-2 py-[2px] text-[10px] font-[Heebo] font-semibold bg-white shadow-sm"
+                            style={{ color: ACCENT }}
+                        >
+                            שלב {index + 1}
+                        </div>
+                    </div>
+                </div>
+
+                <h3
+                    className="font-[Heebo] text-[15px] sm:text-[16px] font-semibold leading-snug mb-1"
+                    style={{ color: TEXT }}
+                >
+                    <span className="relative inline-block px-1">
+                        <span className="relative z-10">{step.title}</span>
+                        <span
+                            className="absolute inset-x-1 -bottom-0.5 h-[2px] rounded-full"
+                            style={{ background: "rgba(124,232,106,0.5)" }}
+                        />
+                    </span>
+                </h3>
+
+                <p
+                    className="font-[Heebo] text-[13px] sm:text-[14px] leading-7 opacity-90 mb-3"
+                    style={{ color: TEXT }}
+                >
+                    {step.description}
+                </p>
+
                 {step.tag && (
                     <span
-                        className="rounded-full px-3 py-1 text-[11px] font-[Heebo] font-medium whitespace-nowrap"
+                        className="rounded-full px-3 py-1 text-[11px] font-[Heebo] font-medium"
                         style={{
-                            backgroundColor: "rgba(91,161,77,0.08)",
+                            backgroundColor: "rgba(124,232,106,0.12)",
                             color: ACCENT,
                         }}
                     >
@@ -103,187 +170,7 @@ function StepCard({ step, index, align = "right" }: StepCardProps) {
                     </span>
                 )}
             </div>
-
-            <h3
-                className="mt-1 font-[Heebo] text-[15px] sm:text-[16px] font-semibold leading-snug"
-                style={{ color: TEXT }}
-            >
-                {step.title}
-            </h3>
-
-            <p
-                className="font-[Heebo] text-[13px] leading-7 opacity-90"
-                style={{ color: TEXT }}
-            >
-                {step.description}
-            </p>
-        </div>
-    );
-}
-
-function DesktopRadialLayout() {
-    return (
-        <div className="relative hidden md:block">
-            <div className="relative mx-auto aspect-[4/3] max-w-5xl">
-                <motion.div
-                    className="absolute inset-0 pointer-events-none"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 0.6 }}
-                    viewport={{ once: true, amount: 0.4 }}
-                    transition={{ duration: 1.4, ease: easeCurve }}
-                >
-                    <div
-                        className="absolute w-64 h-64 -translate-x-1/2 -translate-y-1/2 rounded-full left-1/2 top-1/2"
-                        style={{
-                            background:
-                                "radial-gradient(circle at 50% 50%, rgba(91,161,77,0.28), transparent 60%)",
-                        }}
-                    />
-                </motion.div>
-
-                <motion.div
-                    className="absolute left-1/2 top-1/2 flex h-40 w-40 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border bg-white/90 shadow-[0_20px_45px_rgba(15,23,42,0.16)] backdrop-blur"
-                    style={{ borderColor: "rgba(91,161,77,0.6)" }}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, amount: 0.4 }}
-                    transition={{ duration: 0.8, ease: easeCurve }}
-                >
-                    <motion.div
-                        className="absolute inset-0 rounded-full"
-                        initial={{ boxShadow: "0 0 0 rgba(91,161,77,0)" }}
-                        whileInView={{ boxShadow: "0 0 32px rgba(91,161,77,0.55)" }}
-                        viewport={{ once: false, amount: 0.6 }}
-                        transition={{
-                            duration: 2.2,
-                            ease: "easeInOut",
-                            repeat: Infinity,
-                            repeatType: "reverse",
-                        }}
-                    />
-
-                    <div className="relative z-10 px-4 text-center">
-                        <div
-                            className="font-[Heebo] text-sm font-medium tracking-wide"
-                            style={{ color: ACCENT }}
-                        >
-                            תהליך easyTax
-                        </div>
-                        <div
-                            className="mt-1 font-[Heebo] text-lg font-semibold leading-snug"
-                            style={{ color: TEXT }}
-                        >
-                            מהבדיקה
-                            <br />
-                            להחזר בחשבון
-                        </div>
-                    </div>
-                </motion.div>
-
-                <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute left-1/2 top-[14%] h-[22%] w-px -translate-x-1/2 bg-gradient-to-b from-[rgba(91,161,77,0.4)] to-transparent" />
-                    <div className="absolute right-[12%] top-1/2 h-px w-[18%] -translate-y-1/2 bg-gradient-to-l from-[rgba(91,161,77,0.4)] to-transparent" />
-                    <div className="absolute left-1/2 bottom-[14%] h-[22%] w-px -translate-x-1/2 bg-gradient-to-t from-[rgba(91,161,77,0.4)] to-transparent" />
-                    <div className="absolute left-[12%] top-1/2 h-px w-[18%] -translate-y-1/2 bg-gradient-to-r from-[rgba(91,161,77,0.4)] to-transparent" />
-                </div>
-
-                <motion.ul
-                    className="relative w-full h-full"
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true, amount: 0.4 }}
-                    variants={fadeUp}
-                    custom={2}
-                >
-                    <motion.li
-                        variants={fadeUp}
-                        custom={3}
-                        className="absolute right-[10%] top-[4%] max-w-xs"
-                    >
-                        <StepCard step={STEPS[0]} index={0} align="top" />
-                    </motion.li>
-
-                    <motion.li
-                        variants={fadeUp}
-                        custom={4}
-                        className="absolute right-[2%] top-1/2 max-w-xs -translate-y-1/2"
-                    >
-                        <StepCard step={STEPS[1]} index={1} align="right" />
-                    </motion.li>
-
-                    <motion.li
-                        variants={fadeUp}
-                        custom={5}
-                        className="absolute left-[10%] bottom-[4%] max-w-xs"
-                    >
-                        <StepCard step={STEPS[2]} index={2} align="bottom" />
-                    </motion.li>
-
-                    <motion.li
-                        variants={fadeUp}
-                        custom={6}
-                        className="absolute left-[2%] top-1/2 max-w-xs -translate-y-1/2"
-                    >
-                        <StepCard step={STEPS[3]} index={3} align="left" />
-                    </motion.li>
-                </motion.ul>
-            </div>
-        </div>
-    );
-}
-
-function MobileTimeline() {
-    return (
-        <div className="mt-8 md:hidden">
-            <motion.ul
-                className="relative grid grid-cols-1 gap-5"
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.4 }}
-                variants={fadeUp}
-                custom={2}
-            >
-                {STEPS.map((step, index) => (
-                    <motion.li
-                        key={index}
-                        variants={fadeUp}
-                        custom={index + 3}
-                        className="relative flex gap-3 rounded-2xl bg-white/90 backdrop-blur-sm px-4 py-4 shadow-[0_10px_30px_rgba(15,23,42,0.12)] border border-white/70"
-                    >
-                        <div className="mt-1 shrink-0">
-                            <StepPill index={index} />
-                        </div>
-                        <div className="flex flex-col gap-1 text-right">
-                            <div className="flex items-center justify-between gap-2">
-                                <h3
-                                    className="font-[Heebo] text-[15px] sm:text-[16px] font-semibold leading-snug"
-                                    style={{ color: TEXT }}
-                                >
-                                    {step.title}
-                                </h3>
-                                {step.tag && (
-                                    <span
-                                        className="whitespace-nowrap rounded-full px-2 py-1 text-[10px] font-[Heebo] font-medium"
-                                        style={{
-                                            backgroundColor: "rgba(91,161,77,0.08)",
-                                            color: ACCENT,
-                                        }}
-                                    >
-                                        {step.tag}
-                                    </span>
-                                )}
-                            </div>
-                            <p
-                                className="font-[Heebo] text-[12px] leading-6 opacity-90"
-                                style={{ color: TEXT }}
-                            >
-                                {step.description}
-                            </p>
-                        </div>
-                    </motion.li>
-                ))}
-            </motion.ul>
-        </div>
+        </motion.li>
     );
 }
 
@@ -291,22 +178,13 @@ export default function HowItWorksSection({
     id = "how-it-works",
     className = "",
 }: HowItWorksSectionProps) {
-    const bgUrl = "/BGET2.png";
-
     return (
         <section
             id={id}
             dir="rtl"
-            className={`relative w-full py-16 md:py-24 ${className}`}
+            className={`w-full py-16 md:py-24 ${className}`}
         >
-            <div
-                aria-hidden
-                className="absolute inset-0 bg-center bg-cover pointer-events-none -z-20"
-                style={{ backgroundImage: `url(${bgUrl})` }}
-            />
-            <div className="absolute inset-0 -z-10 bg-white/55 backdrop-blur-sm" />
-
-            <div className="relative max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
+            <div className="max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
                 <motion.div
                     className="flex flex-col items-center gap-4 text-center"
                     initial="hidden"
@@ -317,18 +195,31 @@ export default function HowItWorksSection({
                 >
                     <span
                         className="inline-flex items-center px-4 py-1 text-xs font-medium tracking-wide rounded-full"
-                        style={{ backgroundColor: "rgba(91,161,77,0.12)", color: ACCENT }}
+                        style={{
+                            backgroundColor: "rgba(124,232,106,0.12)",
+                            color: ACCENT,
+                        }}
                     >
-                        איך עובד התהליך?
+                        תהליך EasyTax בקצרה
                     </span>
 
                     <motion.h2
-                        className="font-[Heebo] text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight"
+                        className="font-[Heebo] text-2xl sm:text-3xl md:text-4xl leading-tight"
                         style={{ color: TEXT }}
                         variants={fadeUp}
                         custom={1}
                     >
-                        תהליך אחד ברור – מהבדיקה ועד הכסף בחשבון
+                        <span className="font-extrabold">4 צעדים פשוטים </span>
+                        <br />
+                        <span className="relative inline-block font-normal">
+                            <span className="relative z-10">
+                                מהבדיקה ועד שהכסף בחשבון
+                            </span>
+                            <span
+                                className="absolute left-0 right-0 -bottom-1 h-[3px] rounded-full"
+                                style={{ background: "rgba(124,232,106,0.7)" }}
+                            />
+                        </span>
                     </motion.h2>
 
                     <motion.p
@@ -337,15 +228,24 @@ export default function HowItWorksSection({
                         variants={fadeUp}
                         custom={2}
                     >
-                        בנינו מסלול ברור וקצר: אתה ממלא פרטים, אנחנו מנתחים, מציגים את הפוטנציאל להחזר,
-                        ואם יש זכאות – מטפלים בשבילך עד הסוף מול רשות המסים.
+                        ממלאים כמה פרטים, מקבלים תמונת מצב ראשונית על הזכאות שלכם,
+                        ואם יש החזר פוטנציאלי אנחנו מטפלים בשבילכם בכל מה שצריך מול
+                        רשות המסים.
                     </motion.p>
                 </motion.div>
 
-                <div className="mt-10">
-                    <DesktopRadialLayout />
-                    <MobileTimeline />
-                </div>
+                <motion.ul
+                    className="grid grid-cols-1 gap-6 mt-10 sm:grid-cols-2"
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.35 }}
+                    variants={fadeUp}
+                    custom={2}
+                >
+                    {STEPS.map((step, index) => (
+                        <StepCard key={index} step={step} index={index} />
+                    ))}
+                </motion.ul>
 
                 <motion.div
                     className="flex justify-center mt-10"
@@ -353,12 +253,16 @@ export default function HowItWorksSection({
                     whileInView="show"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={fadeUp}
-                    custom={8}
+                    custom={7}
                 >
                     <a
-                        href="#questionnaire"
+                        href="#quick-check"
                         className="inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm sm:text-base font-[Heebo] font-semibold shadow-md hover:shadow-lg transition active:scale-[0.98]"
-                        style={{ backgroundColor: ACCENT, color: "#ffffff" }}
+                        style={{
+                            backgroundColor: ACCENT,
+                            color: "#ffffff",
+                            boxShadow: "0 0 20px rgba(124,232,106,0.6)",
+                        }}
                     >
                         מתחילים בבדיקת זכאות
                     </a>
@@ -367,4 +271,3 @@ export default function HowItWorksSection({
         </section>
     );
 }
-

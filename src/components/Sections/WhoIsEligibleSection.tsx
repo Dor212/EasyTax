@@ -118,43 +118,55 @@ function EligibilityBubbleCard({
         <motion.div
             className={
                 isMobile
-                    ? "group relative flex min-w-[80%] max-w-[80%] flex-col overflow-hidden rounded-3xl px-6 py-6 cursor-default snap-center"
+                    ? "group relative flex min-w-[78%] max-w-[78%] flex-col overflow-hidden rounded-3xl px-5 py-5 cursor-default snap-center"
                     : "group relative flex min-w-[220px] max-w-[270px] flex-col overflow-hidden rounded-full px-6 py-5 cursor-default"
             }
             style={{
                 background: "#ffffff",
-                boxShadow: "0 18px 40px rgba(15,23,42,0.18)",
+                boxShadow: isMobile
+                    ? "0 10px 24px rgba(15,23,42,0.10)"
+                    : "0 18px 40px rgba(15,23,42,0.18)",
             }}
             variants={fadeUp}
             custom={index + 2}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
-            whileHover={isMobile ? undefined : {
-                scale: 1.06,
-                boxShadow: "0 0 30px rgba(124,232,106,0.7)",
-            }}
+            whileHover={
+                isMobile
+                    ? undefined
+                    : {
+                        scale: 1.06,
+                        boxShadow: "0 0 30px rgba(124,232,106,0.7)",
+                    }
+            }
             transition={{
                 layout: { duration: 0.3, ease: easeCurve },
             }}
         >
-            <motion.div
-                className="absolute inset-0 rounded-[inherit] pointer-events-none"
-                animate={{ y: [0, -6, 0] }}
-                transition={{
-                    duration: 5 + index * 0.4,
-                    repeat: Infinity,
-                    repeatType: "mirror",
-                    ease: easeCurve,
-                }}
-                style={{ mixBlendMode: "soft-light" }}
-            />
+            {!isMobile && (
+                <motion.div
+                    className="absolute inset-0 rounded-[inherit] pointer-events-none"
+                    animate={{ y: [0, -6, 0] }}
+                    transition={{
+                        duration: 5 + index * 0.4,
+                        repeat: Infinity,
+                        repeatType: "mirror",
+                        ease: easeCurve,
+                    }}
+                    style={{ mixBlendMode: "soft-light" }}
+                />
+            )}
 
             <div className="relative z-10 flex flex-col items-center text-center gap-1.5">
                 <img
                     src={bubble.iconSrc}
                     alt={bubble.title}
-                    className={isMobile ? "w-11 h-11 sm:w-12 sm:h-12 object-contain mb-1" : "w-9 h-9 sm:w-11 sm:h-11 object-contain mb-1"}
+                    className={
+                        isMobile
+                            ? "w-11 h-11 sm:w-12 sm:h-12 object-contain mb-1"
+                            : "w-9 h-9 sm:w-11 sm:h-11 object-contain mb-1"
+                    }
                     loading="lazy"
                 />
 
@@ -243,8 +255,11 @@ export default function WhoIsEligibleSection({
                         variants={fadeUp}
                         custom={2}
                     >
-                        ברוב המקרים זה לא עניין של “מגיע לי או לא”, אלא אם מישהו חישב נכון את כל
-                        השינויים שקרו אצלכם בשנים האחרונות. הבועות כאן מסמנות את המצבים הכי נפוצים.
+                        ברוב המקרים זה לא עניין של “מגיע לי או לא”.
+                        <br />
+                        אלא אם מישהו חישב נכון את כל השינויים שקרו אצלכם בשנים האחרונות.
+                        <br />
+                        הבועות כאן מסמנות את המצבים הכי נפוצים.
                     </motion.p>
 
                     <motion.span
@@ -260,19 +275,26 @@ export default function WhoIsEligibleSection({
                     </motion.span>
                 </motion.div>
 
-                {/* מובייל – קרוסלה נגררת */}
+                {/* מובייל – קרוסלה הדוקה לצדדים בלבד */}
                 <div className="mt-8 -mx-4 sm:hidden">
-                    <div className="flex gap-4 px-4 pb-3 overflow-x-auto snap-x snap-mandatory">
-                        {BUBBLES.map((bubble, index) => (
-                            <EligibilityBubbleCard
-                                key={bubble.id}
-                                bubble={bubble}
-                                index={index}
-                                layout="mobile"
-                            />
-                        ))}
+                    <div className="relative px-4">
+                        <div
+                            className="flex gap-4 pb-4 overflow-x-auto overflow-y-hidden snap-x snap-mandatory"
+                            style={{ touchAction: "pan-x" }}
+                        >
+                            {BUBBLES.map((bubble, index) => (
+                                <EligibilityBubbleCard
+                                    key={bubble.id}
+                                    bubble={bubble}
+                                    index={index}
+                                    layout="mobile"
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
+
+                {/* דסקטופ – גריד בועות */}
                 <div className="flex-wrap justify-center hidden gap-4 mt-10 sm:flex sm:gap-5">
                     {BUBBLES.map((bubble, index) => (
                         <EligibilityBubbleCard

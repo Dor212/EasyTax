@@ -102,7 +102,6 @@ export default function AboutSection({
                         </motion.div>
                     </motion.div>
 
-                    {/* טקסט + שאלון */}
                     <div className="w-full max-w-xl">
                         <motion.h1
                             className="font-[Heebo] text-2xl sm:text-3xl md:text-4xl leading-tight text-center"
@@ -172,8 +171,6 @@ export default function AboutSection({
                             בדקו כמה כסף מגיע לכם ממס הכנסה – אנחנו נלווה אתכם
                             עד לקבלת ההחזר בפועל!
                         </motion.p>
-
-                        {/* השאלון המופרד */}
                         <QuickCheckForm />
                     </div>
                 </div>

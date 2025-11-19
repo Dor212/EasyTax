@@ -7,7 +7,7 @@ import HowItWorksSection from "../components/Sections/HowItWorksSection";
 import QuestionnaireSection from "../components/Sections/QuestionnaireSectio";
 import FaqSection from "../components/Sections/FaqSection";
 import WhoIsEligibleSection from "../components/Sections/WhoIsEligibleSection";
-
+import MobileIntroVideoSection from "../components/Sections/MobileIntroVideoSection";
 
 type SectionProps = {
     id: string;
@@ -36,9 +36,9 @@ export type HomePageProps = {
 };
 
 export default function HomePage({ logoSrc = "/ETLogo.png" }: HomePageProps) {
-    const SITE_URL = "https://www.easytax.co.il"; // 🔹 עדכן כשתהיה כתובת דומיין
+    const SITE_URL = "https://www.easytax.co.il";
     const SITE_NAME = "EasyTax";
-    const OG_IMAGE = `${SITE_URL}/og-easytax.jpg`; // 🔹 עדכן/העלה תמונה מתאימה ל-public
+    const OG_IMAGE = `${SITE_URL}/og-easytax.jpg`;
 
     const faqSchema = {
         "@context": "https://schema.org",
@@ -141,7 +141,6 @@ export default function HomePage({ logoSrc = "/ETLogo.png" }: HomePageProps) {
                 <meta name="author" content="EasyTax" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-                {/* Open Graph */}
                 <meta property="og:type" content="website" />
                 <meta property="og:locale" content="he_IL" />
                 <meta property="og:site_name" content={SITE_NAME} />
@@ -157,7 +156,6 @@ export default function HomePage({ logoSrc = "/ETLogo.png" }: HomePageProps) {
                 <meta property="og:image" content={OG_IMAGE} />
                 <meta property="og:image:alt" content="EasyTax - בדיקת זכאות להחזר מס" />
 
-                {/* Twitter Card */}
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content="EasyTax – בדיקת זכאות להחזר מס" />
                 <meta
@@ -166,10 +164,8 @@ export default function HomePage({ logoSrc = "/ETLogo.png" }: HomePageProps) {
                 />
                 <meta name="twitter:image" content={OG_IMAGE} />
 
-                {/* Canonical */}
                 <link rel="canonical" href={SITE_URL} />
 
-                {/* JSON-LD – Website */}
                 <script type="application/ld+json">
                     {JSON.stringify({
                         "@context": "https://schema.org",
@@ -184,7 +180,6 @@ export default function HomePage({ logoSrc = "/ETLogo.png" }: HomePageProps) {
                     })}
                 </script>
 
-                {/* JSON-LD – Organization */}
                 <script type="application/ld+json">
                     {JSON.stringify({
                         "@context": "https://schema.org",
@@ -197,7 +192,7 @@ export default function HomePage({ logoSrc = "/ETLogo.png" }: HomePageProps) {
                         ],
                         contactPoint: {
                             "@type": "ContactPoint",
-                            telephone: "+972-50-2018741", 
+                            telephone: "+972-50-2018741",
                             contactType: "customer service",
                             areaServed: "IL",
                             availableLanguage: ["Hebrew"],
@@ -205,11 +200,12 @@ export default function HomePage({ logoSrc = "/ETLogo.png" }: HomePageProps) {
                     })}
                 </script>
 
-                {/* JSON-LD – FAQPage */}
                 <script type="application/ld+json">
                     {JSON.stringify(faqSchema)}
                 </script>
             </Helmet>
+
+            <MobileIntroVideoSection />
 
             <Section id="about">
                 <AboutSection logoSrc={logoSrc} />
@@ -218,7 +214,7 @@ export default function HomePage({ logoSrc = "/ETLogo.png" }: HomePageProps) {
             <Section id="eligibility">
                 <EligibilitySection />
             </Section>
-            
+
             <Section id="who-is-eligible">
                 <WhoIsEligibleSection />
             </Section>

@@ -7,6 +7,7 @@ import LegalPage from "./Pages/LegalPage/LegalPage";
 import Footer from "./components/Layout/Footer";
 import SocialButtons from "./components/UI/SocialButtons";
 import FloatingButtons from "./components/UI/FloatingButtons";
+import DeepQuestionnairePage from "./Pages/DeepQuestionnairePage/DeepQuestionnairePage";
 
 
 
@@ -43,6 +44,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/legal" element={<LegalPage />} />
+                        <Route path="/questionnaire-deep" element={<DeepQuestionnairePage />} />
                     </Routes>
                 </main>
                 <Footer />

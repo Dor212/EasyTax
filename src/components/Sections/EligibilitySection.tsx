@@ -223,8 +223,15 @@ export default function EligibilitySection({
                         <TimelineCircleStat
                             index={2}
                             target={9870}
-                            prefix="₪"
+                            suffix="₪"
                             label="ממוצע החזר מס ללקוח"
+                            duration={2100}
+                        />
+                        <TimelineCircleStat
+                            index={3}
+                            target={670}
+                            suffix="M"
+                            label="מס ששולם ביתר ולא הוחזר לאזרחים"
                             duration={2100}
                         />
                     </div>
@@ -276,8 +283,7 @@ export default function EligibilitySection({
                             variants={fadeUp}
                             custom={3}
                         >
-                            ראינו יותר מדי שכירים שמוותרים על אלפי שקלים שמגיעים להם
-                            כי התהליך מול מס הכנסה מרגיש מסובך, מבלבל ומפחיד.
+                            הקמנו את EasyTax מתוך רצון אמיתי לעזור לאנשים לקבל את הכסף שמגיע להם מהמדינה.
                         </motion.p>
 
                         <motion.p
@@ -286,18 +292,32 @@ export default function EligibilitySection({
                             variants={fadeUp}
                             custom={4}
                         >
-                            EasyTax נולדה כדי לקחת את כל הבירוקרטיה אלינו ולהשאיר אצלך
-                            רק כמה לחיצות. הכל דיגיטלי, מסודר וברור בלי טפסים מיותרים.
+                            ראינו איך רבים משלמים מס ביתר, בלי לדעת מה מגיע להם ונתקעים מול בירוקרטיה מסובכת ומתישה.
                         </motion.p>
 
                         <motion.p
-                            className="font-[Heebo] text-[14px] sm:text-[15px] leading-7 font-semibold"
+                            className="font-[Heebo] text-[14px] sm:text-[15px] leading-7 font-semibold mb-0"
                             style={{ color: TEXT }}
                             variants={fadeUp}
                             custom={5}
                         >
-                            המטרה שלנו פשוטה להחזיר לך את מה שמגיע לך במקום שישאר אצל המדינה.
+                            <span className="relative inline-block pb-[2px]">
+                                <span className="relative z-10">
+                                    המטרה שלנו ברורה ופשוטה:
+                                </span>
+                                <span
+                                    className="absolute inset-x-0 bottom-[1px] h-[3px] rounded-full"
+                                    style={{
+                                        background:
+                                            "linear-gradient(90deg, rgba(124,232,106,0) 0%, rgba(124,232,106,0.95) 50%, rgba(124,232,106,0) 100%)",
+                                        boxShadow: "0 0 18px rgba(124,232,106,0.85)",
+                                    }}
+                                />
+                            </span>
+                            <br />
+                            להפוך את תהליך החזרי המס לשקוף, נגיש והוגן כדי שכל אחד יקבל בחזרה את כספו בקלות.
                         </motion.p>
+
                     </div>
                 </motion.div>
 

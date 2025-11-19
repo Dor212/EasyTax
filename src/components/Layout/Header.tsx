@@ -40,7 +40,6 @@ const Header: React.FC = () => {
                         alt="EasyTax Logo"
                         className="object-contain w-auto h-8"
                     />
-                
                 </button>
 
                 <nav className="items-center hidden gap-6 md:flex">
@@ -49,7 +48,7 @@ const Header: React.FC = () => {
                         onClick={() => handleNavClick("/#who-is-eligible")}
                         className={`${navLinkBase} text-[color:var(--text)]/80 hover:text-[color:var(--text)] hover:border-[rgba(91,161,77,0.9)]`}
                     >
-                        מי זכאי 
+                        מי זכאי
                     </button>
                     <button
                         type="button"
@@ -68,6 +67,15 @@ const Header: React.FC = () => {
                 </nav>
 
                 <div className="flex items-center gap-3">
+                    {/* כפתור לשאלון המעמיק – שניוני, outlined */}
+                    <button
+                        type="button"
+                        onClick={() => handleNavClick("/questionnaire-deep")}
+                        className="hidden md:inline-flex items-center justify-center px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full border border-[rgba(91,161,77,0.7)] text-[color:var(--text)]/85 bg-white/80 hover:bg-[rgba(91,161,77,0.05)] hover:text-[color:var(--text)] transition-colors shadow-sm"
+                    >
+                        שאלון זכאות מעמיק
+                    </button>
+
                     <button
                         type="button"
                         onClick={() => handleNavClick("/#questionnaire")}
@@ -124,6 +132,13 @@ const Header: React.FC = () => {
                             className="py-2 text-sm text-[color:var(--text)]/85"
                         >
                             שאלות ותשובות
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => handleNavClick("/questionnaire-deep")}
+                            className="py-2 text-sm text-[color:var(--text)]/85"
+                        >
+                            שאלון זכאות מעמיק
                         </button>
                         <button
                             type="button"

@@ -1,7 +1,41 @@
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
-
 export default function MobileIntroVideoSection() {
+    const videoRef = useRef<HTMLVideoElement | null>(null);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        video.muted = true;
+        video.volume = 0;
+
+        const tryAutoplay = () => {
+            video.play().catch(() => { });
+        };
+
+        tryAutoplay();
+
+        const enableSound = () => {
+            const v = videoRef.current;
+            if (!v) return;
+            v.muted = false;
+            v.volume = 0.35;
+            v.play().catch(() => { });
+            window.removeEventListener("touchstart", enableSound);
+            window.removeEventListener("click", enableSound);
+        };
+
+        window.addEventListener("touchstart", enableSound, { passive: true });
+        window.addEventListener("click", enableSound);
+
+        return () => {
+            window.removeEventListener("touchstart", enableSound);
+            window.removeEventListener("click", enableSound);
+        };
+    }, []);
+
     return (
         <section
             id="mobile-intro-video"
@@ -28,10 +62,10 @@ export default function MobileIntroVideoSection() {
                         <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/18 via-transparent to-white/5" />
 
                         <video
+                            ref={videoRef}
                             className="relative z-10 object-cover w-full h-full"
                             src="/videos/easytax-intro2.mp4"
                             autoPlay
-                            muted
                             playsInline
                             controls
                         />

@@ -118,7 +118,7 @@ function EligibilityBubbleCard({
         <motion.div
             className={
                 isMobile
-                    ? "group relative flex min-w-[78%] max-w-[78%] flex-col overflow-hidden rounded-3xl px-5 py-5 cursor-default snap-center"
+                    ? "group relative flex flex-col justify-start min-w-[78%] max-w-[78%] overflow-hidden rounded-3xl px-5 py-6 sm:py-7 cursor-default snap-center"
                     : "group relative flex min-w-[220px] max-w-[270px] flex-col overflow-hidden rounded-full px-6 py-5 cursor-default"
             }
             style={{
@@ -126,6 +126,7 @@ function EligibilityBubbleCard({
                 boxShadow: isMobile
                     ? "0 10px 24px rgba(15,23,42,0.10)"
                     : "0 18px 40px rgba(15,23,42,0.18)",
+                minHeight: isMobile ? 260 : undefined,
             }}
             variants={fadeUp}
             custom={index + 2}
@@ -158,7 +159,7 @@ function EligibilityBubbleCard({
                 />
             )}
 
-            <div className="relative z-10 flex flex-col items-center text-center gap-1.5">
+            <div className="relative z-10 flex flex-col items-center justify-start h-full text-center gap-1.5">
                 <img
                     src={bubble.iconSrc}
                     alt={bubble.title}
@@ -250,7 +251,7 @@ export default function WhoIsEligibleSection({
                     </motion.h2>
 
                     <motion.p
-                        className="font-[Heebo] text-[15px] sm:text-base leading-8 max-w-2xl font-semibold"
+                        className="font-[Heebo] text-[15px] sm:text;base leading-8 max-w-2xl font-semibold"
                         style={{ color: TEXT }}
                         variants={fadeUp}
                         custom={2}
@@ -275,7 +276,6 @@ export default function WhoIsEligibleSection({
                     </motion.span>
                 </motion.div>
 
-                {/* מובייל – קרוסלה הדוקה לצדדים בלבד */}
                 <div className="mt-8 -mx-4 sm:hidden">
                     <div className="relative px-4">
                         <div
@@ -294,7 +294,6 @@ export default function WhoIsEligibleSection({
                     </div>
                 </div>
 
-                {/* דסקטופ – גריד בועות */}
                 <div className="flex-wrap justify-center hidden gap-4 mt-10 sm:flex sm:gap-5">
                     {BUBBLES.map((bubble, index) => (
                         <EligibilityBubbleCard

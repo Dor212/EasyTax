@@ -81,7 +81,7 @@ export default function MobileIntroVideoSection() {
                         <video
                             ref={videoRef}
                             className="relative z-10 object-cover w-full h-full"
-                            src="/videos/easytax-intro2.mp4"
+                            src="/videos/easytax-intro1.mp4"
                             autoPlay
                             playsInline
                             controls

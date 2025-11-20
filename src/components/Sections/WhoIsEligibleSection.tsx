@@ -124,7 +124,7 @@ function EligibilityBubbleCard({
             style={{
                 background: "#ffffff",
                 boxShadow: isMobile
-                    ? "0 10px 24px rgba(15,23,42,0.10)"
+                    ? "none"
                     : "0 18px 40px rgba(15,23,42,0.18)",
                 minHeight: isMobile ? 260 : undefined,
             }}
@@ -251,7 +251,7 @@ export default function WhoIsEligibleSection({
                     </motion.h2>
 
                     <motion.p
-                        className="font-[Heebo] text-[15px] sm:text;base leading-8 max-w-2xl font-semibold"
+                        className="font-[Heebo] text-[15px] sm:text:base leading-8 max-w-2xl font-semibold"
                         style={{ color: TEXT }}
                         variants={fadeUp}
                         custom={2}

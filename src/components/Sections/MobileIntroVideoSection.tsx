@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
 export default function MobileIntroVideoSection() {
     const videoRef = useRef<HTMLVideoElement | null>(null);
+    const sectionRef = useRef<HTMLElement | null>(null);
+    const inView = useInView(sectionRef, { amount: 0.4 });
 
     useEffect(() => {
         const video = videoRef.current;
@@ -36,8 +38,23 @@ export default function MobileIntroVideoSection() {
         };
     }, []);
 
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        if (!inView) {
+            video.muted = true;
+            video.pause();
+        } else {
+            if (video.paused) {
+                video.play().catch(() => { });
+            }
+        }
+    }, [inView]);
+
     return (
         <section
+            ref={sectionRef}
             id="mobile-intro-video"
             dir="rtl"
             className="md:hidden w-full min-h-screen pt-16 pb-10 px-4 flex items-center justify-center bg-[rgba(124,232,106,0.10)] backdrop-blur-md"

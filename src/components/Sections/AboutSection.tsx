@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import QuickCheckForm from "../Questionnaire/QuickCheckForm";
-
 
 type AboutSectionProps = {
     id?: string;
@@ -27,6 +27,9 @@ export default function AboutSection({
     className = "",
     logoSrc = `${import.meta.env.BASE_URL}ETLogo1.png`,
 }: AboutSectionProps) {
+    const circleWrapperRef = useRef<HTMLDivElement | null>(null);
+    const circleInView = useInView(circleWrapperRef, { amount: 0.6 });
+
     return (
         <section
             id={id}
@@ -35,12 +38,12 @@ export default function AboutSection({
         >
             <div className="max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-16 place-items-center">
-                    
                     <motion.div
+                        ref={circleWrapperRef}
                         className="relative grid size-56 sm:size-64 md:size-72 place-items-center"
                         initial="hidden"
                         whileInView="show"
-                        viewport={{ once: true, amount: 0.4 }}
+                        viewport={{ once: false, amount: 0.4 }}
                         variants={fadeUp}
                         custom={0}
                     >
@@ -50,8 +53,7 @@ export default function AboutSection({
                             viewBox="0 0 100 100"
                             className="absolute inset-0"
                             initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true, amount: 0.6 }}
+                            animate={circleInView ? { opacity: 1 } : { opacity: 0 }}
                             transition={{ duration: 0.4 }}
                         >
                             <motion.circle
@@ -64,8 +66,11 @@ export default function AboutSection({
                                 strokeDasharray="302"
                                 strokeDashoffset={302}
                                 initial={{ strokeDashoffset: 302 }}
-                                whileInView={{ strokeDashoffset: 0 }}
-                                viewport={{ once: true, amount: 0.7 }}
+                                animate={
+                                    circleInView
+                                        ? { strokeDashoffset: 0 }
+                                        : { strokeDashoffset: 302 }
+                                }
                                 transition={{
                                     duration: 1.4,
                                     ease: "easeInOut",
@@ -77,7 +82,7 @@ export default function AboutSection({
                             className="relative size-[86%] rounded-full overflow-hidden bg-white/80 backdrop-blur-[4px]"
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true, amount: 0.4 }}
+                            viewport={{ once: false, amount: 0.4 }}
                             transition={{
                                 duration: 0.7,
                                 ease: easeCurve,

@@ -74,6 +74,149 @@ function formatNumber(n: number) {
     return n.toLocaleString("he-IL");
 }
 
+type LedScreenNumberProps = {
+    value: number;
+    suffix?: string;
+};
+
+const SEGMENTS: Record<
+    string,
+    [number, number, number, number, number, number, number]
+> = {
+    "0": [1, 1, 1, 1, 1, 1, 0],
+    "1": [0, 1, 1, 0, 0, 0, 0],
+    "2": [1, 1, 0, 1, 1, 0, 1],
+    "3": [1, 1, 1, 1, 0, 0, 1],
+    "4": [0, 1, 1, 0, 0, 1, 1],
+    "5": [1, 0, 1, 1, 0, 1, 1],
+    "6": [1, 0, 1, 1, 1, 1, 1],
+    "7": [1, 1, 1, 0, 0, 0, 0],
+    "8": [1, 1, 1, 1, 1, 1, 1],
+    "9": [1, 1, 1, 1, 0, 1, 1],
+};
+
+function SevenSegDigit({ char }: { char: string }) {
+    const on = SEGMENTS[char] ?? [0, 0, 0, 0, 0, 0, 0];
+
+    const onStyle = {
+        fill: "rgba(225,255,235,0.98)",
+        filter:
+            "drop-shadow(0 0 6px rgba(124,232,106,0.95)) drop-shadow(0 0 14px rgba(124,232,106,0.7))",
+    };
+
+    const offStyle = {
+        fill: "rgba(124,232,106,0.08)",
+        filter: "none",
+    };
+
+    return (
+        <svg
+            viewBox="0 0 60 100"
+            className="w-auto h-12 sm:h-14 md:h-16"
+            aria-hidden
+        >
+            <rect
+                x="2"
+                y="2"
+                width="56"
+                height="96"
+                rx="8"
+                fill="rgba(3,8,4,0.9)"
+                stroke="rgba(124,232,106,0.18)"
+            />
+
+            <polygon
+                points="14,8 46,8 40,14 20,14"
+                style={on[0] ? onStyle : offStyle}
+            />
+            <polygon
+                points="48,12 54,18 54,46 48,40"
+                style={on[1] ? onStyle : offStyle}
+            />
+            <polygon
+                points="48,60 54,54 54,82 48,88"
+                style={on[2] ? onStyle : offStyle}
+            />
+            <polygon
+                points="14,92 46,92 40,86 20,86"
+                style={on[3] ? onStyle : offStyle}
+            />
+            <polygon
+                points="12,60 6,54 6,82 12,88"
+                style={on[4] ? onStyle : offStyle}
+            />
+            <polygon
+                points="12,12 6,18 6,46 12,40"
+                style={on[5] ? onStyle : offStyle}
+            />
+            <polygon
+                points="14,50 20,44 40,44 46,50 40,56 20,56"
+                style={on[6] ? onStyle : offStyle}
+            />
+
+            <rect
+                x="4"
+                y="6"
+                width="52"
+                height="10"
+                rx="6"
+                fill="rgba(255,255,255,0.06)"
+            />
+        </svg>
+    );
+}
+
+function LedScreenNumber({ value, suffix }: LedScreenNumberProps) {
+    const str = formatNumber(value);
+    const chars = str.split("");
+
+    return (
+        <div
+            dir="ltr"
+            className="relative inline-flex items-center gap-1 px-2 py-3 rounded-2xl bg-[#040704]/70 border border-[rgba(124,232,106,0.25)] shadow-[inset_0_0_14px_rgba(124,232,106,0.14),0_0_20px_rgba(124,232,106,0.22)]"
+            style={{ direction: "ltr", unicodeBidi: "isolate" }}
+        >
+            <div
+                className="absolute inset-0 pointer-events-none rounded-2xl opacity-20"
+                style={{
+                    background:
+                        "radial-gradient(circle at 30% 10%, rgba(124,232,106,0.10), transparent 55%), radial-gradient(circle at 70% 90%, rgba(124,232,106,0.08), transparent 60%)",
+                }}
+            />
+            <div className="relative z-10 inline-flex items-center gap-1">
+                {chars.map((ch, i) =>
+                    ch === "," ? (
+                        <span
+                            key={i}
+                            className="mx-[2px] text-2xl sm:text-3xl md:text-4xl font-extrabold leading-none"
+                            style={{
+                                color: "rgba(225,255,235,0.95)",
+                                textShadow: "0 0 6px rgba(124,232,106,0.9)",
+                            }}
+                        >
+                            ,
+                        </span>
+                    ) : (
+                        <SevenSegDigit key={i} char={ch} />
+                    )
+                )}
+
+                {suffix ? (
+                    <span
+                        className="mr-2 font-[Heebo] font-extrabold text-sm sm:text-base md:text-lg"
+                        style={{
+                            color: "rgba(241,243,194,0.95)",
+                            textShadow: "0 0 6px rgba(124,232,106,0.55)",
+                        }}
+                    >
+                        {suffix}
+                    </span>
+                ) : null}
+            </div>
+        </div>
+    );
+}
+
 type StatProps = {
     label: string;
     prefix?: string;
@@ -197,27 +340,16 @@ function TimelineBigStat({
             custom={index}
         >
             <motion.div
-                className="font-mono text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl"
-                style={{
-                    color: "rgba(241,243,194,0.95)",      
-                    WebkitTextStroke: "1.2px rgba(124,232,106,0.95)", 
-                    textShadow:
-                        "0 0 8px rgba(124,232,106,0.9), 0 0 18px rgba(124,232,106,0.75), 0 0 36px rgba(124,232,106,0.5)",
-                    filter: "drop-shadow(0 0 10px rgba(124,232,106,0.9))",
-                }}
+                className="flex justify-center"
                 initial={{ opacity: 0, y: 6 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
                 transition={{ duration: 0.6, ease: easeCurve }}
             >
-                {prefix}
-                {formatNumber(value)}
-                {suffix}
+                <LedScreenNumber value={value} suffix={suffix} />
             </motion.div>
 
-
-
             <motion.div
-                className="mt-3 h-[3px] w-44 sm:w-60 md:w-72 rounded-full"
+                className="mt-4 h-[3px] w-52 sm:w-64 md:w-72 rounded-full"
                 style={{ ...GLOW_LINE_H, transformOrigin: "center" }}
                 initial={{ scaleX: 0 }}
                 animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
@@ -231,6 +363,7 @@ function TimelineBigStat({
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
                 transition={{ duration: 0.6, ease: easeCurve, delay: 0.15 }}
             >
+                {prefix}
                 {label}
             </motion.p>
         </motion.div>
@@ -245,7 +378,7 @@ export default function EligibilitySection({
         <section
             id={id}
             dir="rtl"
-            className={`w-full py-20 md:py-28 ${className}`}
+            className={`w-full pt-0 pb-20 md:pb-28 ${className}`}
         >
             <div className="max-w-5xl px-4 mx-auto">
                 <motion.div
@@ -256,6 +389,15 @@ export default function EligibilitySection({
                     variants={fadeUp}
                     custom={0}
                 >
+                    <span
+                        className="inline-flex items-center px-4 py-1 text-xs font-medium tracking-wide rounded-full"
+                        style={{
+                            backgroundColor: "rgba(124,232,106,0.12)",
+                            color: ACCENT,
+                        }}
+                    >
+                        המספרים שמדברים בעד עצמם
+                    </span>
                 </motion.div>
 
                 <motion.div

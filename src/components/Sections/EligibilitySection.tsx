@@ -5,6 +5,8 @@ import type { Variants } from "framer-motion";
 const ACCENT = "#7CE86A" as const;
 const TEXT = "#3A3A4A" as const;
 
+const COUNTUP_MS = 9000;
+
 const GLOW_LINE_H = {
     background:
         "linear-gradient(90deg, rgba(124,232,106,0) 0%, rgba(124,232,106,0.95) 50%, rgba(124,232,106,0) 100%)",
@@ -99,69 +101,37 @@ function SevenSegDigit({ char }: { char: string }) {
     const on = SEGMENTS[char] ?? [0, 0, 0, 0, 0, 0, 0];
 
     const onStyle = {
-        fill: "rgba(160,255,180,0.98)",
+        fill: "rgba(124,232,106,0.98)",
         filter:
-            "drop-shadow(0 0 2px rgba(255,255,255,0.55)) drop-shadow(0 0 6px rgba(124,232,106,0.95)) drop-shadow(0 0 14px rgba(124,232,106,0.7))",
+            "drop-shadow(0 0 4px rgba(124,232,106,1)) drop-shadow(0 0 12px rgba(124,232,106,0.95)) drop-shadow(0 0 26px rgba(124,232,106,0.7))",
     };
 
     const offStyle = {
-        fill: "rgba(124,232,106,0.08)",
+        fill: "rgba(124,232,106,0.10)",
         filter: "none",
     };
 
     return (
-        <svg
-            viewBox="0 0 60 100"
-            className="w-auto h-12 sm:h-14 md:h-16"
-            aria-hidden
-        >
+        <svg viewBox="0 0 60 100" className="w-auto h-12 sm:h-14 md:h-16" aria-hidden>
             <rect
                 x="2"
                 y="2"
                 width="56"
                 height="96"
                 rx="8"
-                fill="rgba(0,0,0,0.95)"
-                stroke="rgba(124,232,106,0.18)"
+                fill="rgba(4,10,5,0.92)"
+                stroke="rgba(124,232,106,0.22)"
             />
 
-            <polygon
-                points="14,8 46,8 40,14 20,14"
-                style={on[0] ? onStyle : offStyle}
-            />
-            <polygon
-                points="48,12 54,18 54,46 48,40"
-                style={on[1] ? onStyle : offStyle}
-            />
-            <polygon
-                points="48,60 54,54 54,82 48,88"
-                style={on[2] ? onStyle : offStyle}
-            />
-            <polygon
-                points="14,92 46,92 40,86 20,86"
-                style={on[3] ? onStyle : offStyle}
-            />
-            <polygon
-                points="12,60 6,54 6,82 12,88"
-                style={on[4] ? onStyle : offStyle}
-            />
-            <polygon
-                points="12,12 6,18 6,46 12,40"
-                style={on[5] ? onStyle : offStyle}
-            />
-            <polygon
-                points="14,50 20,44 40,44 46,50 40,56 20,56"
-                style={on[6] ? onStyle : offStyle}
-            />
+            <polygon points="14,8 46,8 40,14 20,14" style={on[0] ? onStyle : offStyle} />
+            <polygon points="48,12 54,18 54,46 48,40" style={on[1] ? onStyle : offStyle} />
+            <polygon points="48,60 54,54 54,82 48,88" style={on[2] ? onStyle : offStyle} />
+            <polygon points="14,92 46,92 40,86 20,86" style={on[3] ? onStyle : offStyle} />
+            <polygon points="12,60 6,54 6,82 12,88" style={on[4] ? onStyle : offStyle} />
+            <polygon points="12,12 6,18 6,46 12,40" style={on[5] ? onStyle : offStyle} />
+            <polygon points="14,50 20,44 40,44 46,50 40,56 20,56" style={on[6] ? onStyle : offStyle} />
 
-            <rect
-                x="4"
-                y="6"
-                width="52"
-                height="10"
-                rx="6"
-                fill="rgba(255,255,255,0.04)"
-            />
+            <rect x="4" y="6" width="52" height="10" rx="6" fill="rgba(255,255,255,0.06)" />
         </svg>
     );
 }
@@ -173,14 +143,14 @@ function LedScreenNumber({ value, suffix }: LedScreenNumberProps) {
     return (
         <div
             dir="ltr"
-            className="relative inline-flex items-center gap-1 px-2 py-3 rounded-2xl border border-[rgba(124,232,106,0.5)] bg-[rgba(0,0,0,0.6)] shadow-[inset_0_0_18px_rgba(124,232,106,0.15),0_0_26px_rgba(124,232,106,0.3)]"
+            className="relative inline-flex items-center gap-1 px-2 py-3 rounded-2xl border border-[rgba(124,232,106,0.55)] bg-[rgba(124,232,106,0.12)] shadow-[inset_0_0_18px_rgba(124,232,106,0.18),0_0_26px_rgba(124,232,106,0.35)]"
             style={{ direction: "ltr", unicodeBidi: "isolate" }}
         >
             <div
-                className="absolute inset-0 pointer-events-none rounded-2xl opacity-18"
+                className="absolute inset-0 pointer-events-none rounded-2xl opacity-35"
                 style={{
                     background:
-                        "linear-gradient(145deg, rgba(124,232,106,0.12) 0%, rgba(0,0,0,0) 55%), radial-gradient(circle at 70% 85%, rgba(124,232,106,0.14), transparent 60%)",
+                        "linear-gradient(145deg, rgba(124,232,106,0.18) 0%, rgba(0,0,0,0) 55%), radial-gradient(circle at 70% 85%, rgba(124,232,106,0.22), transparent 60%)",
                 }}
             />
             <div className="relative z-10 inline-flex items-center gap-1">
@@ -190,9 +160,9 @@ function LedScreenNumber({ value, suffix }: LedScreenNumberProps) {
                             key={i}
                             className="mx-[2px] text-2xl sm:text-3xl md:text-4xl font-extrabold leading-none"
                             style={{
-                                color: "rgba(160,255,180,0.98)",
+                                color: "rgba(124,232,106,0.98)",
                                 textShadow:
-                                    "0 0 2px rgba(255,255,255,0.55), 0 0 6px rgba(124,232,106,0.9)",
+                                    "0 0 4px rgba(124,232,106,1), 0 0 10px rgba(124,232,106,0.9)",
                             }}
                         >
                             ,
@@ -225,7 +195,6 @@ type StatProps = {
     target: number;
     index: number;
     isPercent?: boolean;
-    duration?: number;
 };
 
 function TimelineCircleStat({
@@ -235,11 +204,10 @@ function TimelineCircleStat({
     target,
     index,
     isPercent,
-    duration = 1800,
 }: StatProps) {
     const ref = useRef<HTMLDivElement | null>(null);
     const inView = useInView(ref, { amount: 0.4 });
-    const value = useCountUp(target, inView, duration);
+    const value = useCountUp(target, inView, COUNTUP_MS);
 
     return (
         <motion.div
@@ -268,15 +236,8 @@ function TimelineCircleStat({
                         strokeDasharray="326"
                         strokeDashoffset={326}
                         initial={{ strokeDashoffset: 326 }}
-                        animate={
-                            inView
-                                ? { strokeDashoffset: 0 }
-                                : { strokeDashoffset: 326 }
-                        }
-                        transition={{
-                            duration: 1.6,
-                            ease: "easeInOut",
-                        }}
+                        animate={inView ? { strokeDashoffset: 0 } : { strokeDashoffset: 326 }}
+                        transition={{ duration: 1.6, ease: "easeInOut" }}
                     />
                 </motion.svg>
 
@@ -318,7 +279,6 @@ type BigStatProps = {
     suffix?: string;
     target: number;
     index: number;
-    duration?: number;
 };
 
 function TimelineBigStat({
@@ -327,11 +287,10 @@ function TimelineBigStat({
     suffix,
     target,
     index,
-    duration = 2000,
 }: BigStatProps) {
     const ref = useRef<HTMLDivElement | null>(null);
     const inView = useInView(ref, { amount: 0.4 });
-    const value = useCountUp(target, inView, duration);
+    const value = useCountUp(target, inView, COUNTUP_MS);
 
     return (
         <motion.div
@@ -376,11 +335,7 @@ export default function EligibilitySection({
     className = "",
 }: EligibilitySectionProps) {
     return (
-        <section
-            id={id}
-            dir="rtl"
-            className={`w-full pt-0 pb-20 md:pb-28 ${className}`}
-        >
+        <section id={id} dir="rtl" className={`w-full pt-0 pb-20 md:pb-28 ${className}`}>
             <div className="max-w-5xl px-4 mx-auto">
                 <motion.div
                     className="flex flex-col items-center mb-10 text-center"
@@ -424,27 +379,23 @@ export default function EligibilitySection({
                             isPercent
                             suffix="%"
                             label="אחוזי הצלחה בבדיקת זכאות"
-                            duration={1200}
                         />
                         <TimelineCircleStat
                             index={1}
                             target={75000}
                             label="ישראלים שכבר גילו שמגיע להם כסף"
-                            duration={1800}
                         />
                         <TimelineCircleStat
                             index={2}
                             target={9870}
                             suffix="₪"
                             label="ממוצע החזר מס ללקוח"
-                            duration={2100}
                         />
                         <TimelineBigStat
                             index={3}
                             target={670000000}
                             suffix="₪"
                             label='על פי דו״ח מבקר המדינה, זה הסכום הממוצע שמצטבר בקופת המדינה בכל שנה ולא מוחזר לאזרחים.'
-                            duration={2200}
                         />
                     </div>
                 </motion.div>
@@ -472,17 +423,11 @@ export default function EligibilitySection({
                                 initial={{ scale: 0.95 }}
                                 whileInView={{ scale: 1 }}
                                 viewport={{ once: true, amount: 0.8 }}
-                                transition={{
-                                    duration: 0.5,
-                                    ease: easeCurve,
-                                    delay: 0.15,
-                                }}
+                                transition={{ duration: 0.5, ease: easeCurve, delay: 0.15 }}
                             >
                                 <span
                                     className="absolute inset-0 rounded-xl"
-                                    style={{
-                                        background: "rgba(124,232,106,0.18)",
-                                    }}
+                                    style={{ background: "rgba(124,232,106,0.18)" }}
                                 />
                                 <span className="relative z-10">EasyTax</span>
                             </motion.span>
@@ -514,13 +459,8 @@ export default function EligibilitySection({
                             custom={5}
                         >
                             <span className="relative inline-block pb-[2px]">
-                                <span className="relative z-10">
-                                    המטרה שלנו ברורה ופשוטה:
-                                </span>
-                                <span
-                                    className="absolute inset-x-0 bottom-[1px] h-[3px] rounded-full"
-                                    style={GLOW_LINE_H}
-                                />
+                                <span className="relative z-10">המטרה שלנו ברורה ופשוטה:</span>
+                                <span className="absolute inset-x-0 bottom-[1px] h-[3px] rounded-full" style={GLOW_LINE_H} />
                             </span>
                             <br />
                             להפוך את תהליך החזרי המס לשקוף, נגיש והוגן כדי שכל אחד יקבל בחזרה את כספו בקלות.

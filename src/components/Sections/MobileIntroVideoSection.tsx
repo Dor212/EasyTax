@@ -1,36 +1,76 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
 export default function MobileIntroVideoSection() {
     const videoRef = useRef<HTMLVideoElement | null>(null);
-    const sectionRef = useRef<HTMLElement | null>(null);
-    const inView = useInView(sectionRef, { amount: 0.4 });
+    const wrapRef = useRef<HTMLDivElement | null>(null);
+
+    const [isMobile, setIsMobile] = useState(() => {
+        if (typeof window === "undefined") return false;
+        return window.matchMedia("(max-width: 639px)").matches;
+    });
+
+    const inView = useInView(wrapRef, { amount: 0.35 });
 
     useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
+        if (typeof window === "undefined") return;
 
-        video.muted = true;
-        video.volume = 0;
+        const mql = window.matchMedia("(max-width: 639px)");
 
-        const tryAutoplay = () => {
-            video.play().catch(() => { });
+        const update = (matches: boolean) => {
+            setIsMobile(matches);
+            if (!matches && videoRef.current) {
+                videoRef.current.pause();
+                videoRef.current.currentTime = 0;
+                videoRef.current.muted = true;
+            }
         };
 
-        tryAutoplay();
+        update(mql.matches);
+
+        const onChange = (e: MediaQueryListEvent) => update(e.matches);
+
+        const mqlAny = mql as unknown as {
+            addEventListener: (type: "change", cb: (e: MediaQueryListEvent) => void) => void;
+            removeEventListener: (type: "change", cb: (e: MediaQueryListEvent) => void) => void;
+        };
+
+        mqlAny.addEventListener("change", onChange);
+        return () => mqlAny.removeEventListener("change", onChange);
+    }, []);
+
+    useEffect(() => {
+        const v = videoRef.current;
+        if (!v) return;
+
+        if (!inView) {
+            v.pause();
+            v.muted = true;
+            return;
+        }
+
+        const play = async () => {
+            try {
+                v.muted = true;
+                await v.play();
+            } catch { 
+                // autoplay failed
+            }
+        };
+
+        play();
+    }, [inView]);
+
+    useEffect(() => {
+        const v = videoRef.current;
+        if (!v) return;
 
         const enableSound = () => {
-            const v = videoRef.current;
-            if (!v) return;
             v.muted = false;
-            v.volume = 0.35;
-            v.play().catch(() => { });
-            window.removeEventListener("touchstart", enableSound);
-            window.removeEventListener("click", enableSound);
         };
 
-        window.addEventListener("touchstart", enableSound, { passive: true });
-        window.addEventListener("click", enableSound);
+        window.addEventListener("touchstart", enableSound, { once: true });
+        window.addEventListener("click", enableSound, { once: true });
 
         return () => {
             window.removeEventListener("touchstart", enableSound);
@@ -38,56 +78,23 @@ export default function MobileIntroVideoSection() {
         };
     }, []);
 
-    useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
-
-        if (!inView) {
-            video.muted = true;
-            video.pause();
-        } else {
-            if (video.paused) {
-                video.play().catch(() => { });
-            }
-        }
-    }, [inView]);
+    if (!isMobile) return null;
 
     return (
-        <section
-            ref={sectionRef}
-            id="mobile-intro-video"
-            dir="rtl"
-            className="md:hidden w-full min-h-screen pt-16 pb-10 px-4 flex items-center justify-center bg-[rgba(124,232,106,0.10)] backdrop-blur-md"
-        >
-            <div className="w-full max-w-sm mx-auto">
-                <motion.div
-                    initial={{ opacity: 0, y: 20, scale: 0.97 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="relative w-full aspect-[9/16]"
-                >
-                    <div
-                        className="absolute pointer-events-none -inset-x-8 -inset-y-6 opacity-60 blur-3xl"
-                        style={{
-                            background:
-                                "radial-gradient(circle at top, rgba(124,232,106,0.45), transparent 60%)",
-                        }}
-                    />
-
-                    <div className="relative w-full h-full overflow-hidden rounded-[28px] bg-white/90 border border-[rgba(124,232,106,0.4)] shadow-[0_20px_60px_rgba(15,23,42,0.16)]">
-                        <div className="pointer-events-none absolute inset-0 bg-[rgba(124,232,106,0.10)] mix-blend-soft-light" />
-                        <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/18 via-transparent to-white/5" />
-
-                        <video
-                            ref={videoRef}
-                            className="relative z-10 object-cover w-full h-full"
-                            src="/videos/easytax-intro1.mp4"
-                            autoPlay
-                            playsInline
-                            controls
-                        />
-                    </div>
-                </motion.div>
+        <section dir="rtl" className="relative w-full bg-black">
+            <div ref={wrapRef} className="relative w-full aspect-[9/16]">
+                <motion.video
+                    ref={videoRef}
+                    className="object-cover w-full h-full"
+                    src="/videos/easytax-intro2.mp4"
+                    playsInline
+                    muted
+                    loop
+                    autoPlay
+                    preload="metadata"
+                />
+                <div className="absolute inset-0 pointer-events-none bg-[rgba(124,232,106,0.10)] mix-blend-screen" />
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/25 via-transparent to-black/35" />
             </div>
         </section>
     );

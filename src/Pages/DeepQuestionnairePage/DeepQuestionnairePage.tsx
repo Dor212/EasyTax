@@ -113,7 +113,7 @@ export default function DeepQuestionnairePage() {
                             <video
                                 ref={videoElementRef}
                                 className="object-cover w-full h-full"
-                                src="/videos/easytax-intro2.mp4"
+                                src="/videos/easytax-intro3.mp4"
                                 autoPlay
                                 muted={!hasInteracted}
                                 playsInline
@@ -131,7 +131,7 @@ export default function DeepQuestionnairePage() {
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.45, delay: 0.1 }}
-                        className="w-full bg-white/95 backdrop-blur-sm border border-[rgba(124,232,106,0.25)] rounded-2xl p-4 sm:p-6 shadow-[0_18px_60px_rgba(15,23,42,0.12)]"
+                        className="w-full bg-white/95 backdrop-blur-sm border border-[rgba(124,232,106,0.25)] rounded-2xl p-4 sm:p-6 shadow-[0_18px_60px_rgba(15,23,42,0.12)] lg:self-center"
                     >
                         <DeepEligibilityForm />
                     </motion.div>

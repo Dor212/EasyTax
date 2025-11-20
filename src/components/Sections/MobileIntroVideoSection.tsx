@@ -86,7 +86,7 @@ export default function MobileIntroVideoSection() {
                 <motion.video
                     ref={videoRef}
                     className="object-cover w-full h-full"
-                    src="/videos/easytax-intro2.mp4"
+                    src="/videos/easytax-intro1.mp4"
                     playsInline
                     muted
                     loop

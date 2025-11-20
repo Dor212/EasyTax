@@ -99,13 +99,13 @@ function SevenSegDigit({ char }: { char: string }) {
     const on = SEGMENTS[char] ?? [0, 0, 0, 0, 0, 0, 0];
 
     const onStyle = {
-        fill: "rgba(240,255,244,0.98)",
+        fill: "rgba(160,255,180,0.98)",
         filter:
-            "drop-shadow(0 0 6px rgba(124,232,106,0.95)) drop-shadow(0 0 14px rgba(124,232,106,0.7))",
+            "drop-shadow(0 0 2px rgba(255,255,255,0.55)) drop-shadow(0 0 6px rgba(124,232,106,0.95)) drop-shadow(0 0 14px rgba(124,232,106,0.7))",
     };
 
     const offStyle = {
-        fill: "rgba(124,232,106,0.10)",
+        fill: "rgba(124,232,106,0.08)",
         filter: "none",
     };
 
@@ -121,8 +121,8 @@ function SevenSegDigit({ char }: { char: string }) {
                 width="56"
                 height="96"
                 rx="8"
-                fill="rgba(4,10,5,0.92)"
-                stroke="rgba(124,232,106,0.22)"
+                fill="rgba(0,0,0,0.95)"
+                stroke="rgba(124,232,106,0.18)"
             />
 
             <polygon
@@ -160,7 +160,7 @@ function SevenSegDigit({ char }: { char: string }) {
                 width="52"
                 height="10"
                 rx="6"
-                fill="rgba(255,255,255,0.06)"
+                fill="rgba(255,255,255,0.04)"
             />
         </svg>
     );
@@ -173,14 +173,14 @@ function LedScreenNumber({ value, suffix }: LedScreenNumberProps) {
     return (
         <div
             dir="ltr"
-            className="relative inline-flex items-center gap-1 px-2 py-3 rounded-2xl border border-[rgba(124,232,106,0.55)] bg-[rgba(124,232,106,0.12)] shadow-[inset_0_0_18px_rgba(124,232,106,0.18),0_0_26px_rgba(124,232,106,0.35)]"
+            className="relative inline-flex items-center gap-1 px-2 py-3 rounded-2xl border border-[rgba(124,232,106,0.5)] bg-[rgba(0,0,0,0.6)] shadow-[inset_0_0_18px_rgba(124,232,106,0.15),0_0_26px_rgba(124,232,106,0.3)]"
             style={{ direction: "ltr", unicodeBidi: "isolate" }}
         >
             <div
-                className="absolute inset-0 pointer-events-none rounded-2xl opacity-35"
+                className="absolute inset-0 pointer-events-none rounded-2xl opacity-18"
                 style={{
                     background:
-                        "linear-gradient(145deg, rgba(124,232,106,0.18) 0%, rgba(0,0,0,0) 55%), radial-gradient(circle at 70% 85%, rgba(124,232,106,0.22), transparent 60%)",
+                        "linear-gradient(145deg, rgba(124,232,106,0.12) 0%, rgba(0,0,0,0) 55%), radial-gradient(circle at 70% 85%, rgba(124,232,106,0.14), transparent 60%)",
                 }}
             />
             <div className="relative z-10 inline-flex items-center gap-1">
@@ -190,8 +190,9 @@ function LedScreenNumber({ value, suffix }: LedScreenNumberProps) {
                             key={i}
                             className="mx-[2px] text-2xl sm:text-3xl md:text-4xl font-extrabold leading-none"
                             style={{
-                                color: "rgba(245,255,248,0.98)",
-                                textShadow: "0 0 6px rgba(124,232,106,0.9)",
+                                color: "rgba(160,255,180,0.98)",
+                                textShadow:
+                                    "0 0 2px rgba(255,255,255,0.55), 0 0 6px rgba(124,232,106,0.9)",
                             }}
                         >
                             ,

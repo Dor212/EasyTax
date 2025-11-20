@@ -1,12 +1,13 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import DeepEligibilityForm from "../../components/Questionnaire/DeepEligibilityForm";
-/* 
-const ACCENT = "#7CE86A"; */
+
 const TEXT = "#3A3A4A";
 
 export default function DeepQuestionnairePage() {
     const videoRef = useRef<HTMLDivElement | null>(null);
+    const videoElementRef = useRef<HTMLVideoElement | null>(null);
+    const [hasInteracted, setHasInteracted] = useState(false);
 
     const { scrollYProgress } = useScroll({
         target: videoRef,
@@ -14,6 +15,48 @@ export default function DeepQuestionnairePage() {
     });
 
     const videoOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.4]);
+
+    useEffect(() => {
+        const video = videoElementRef.current;
+        if (!video) return;
+
+        video.muted = true;
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === "function") {
+            playPromise.catch(() => { });
+        }
+    }, []);
+
+    useEffect(() => {
+        const video = videoElementRef.current;
+        if (!video) return;
+
+        const unsubscribe = scrollYProgress.on("change", (v) => {
+            if (v > 0.9) {
+                video.muted = true;
+                video.pause();
+                setHasInteracted(false);
+            }
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, [scrollYProgress]);
+
+    const handleUserInteract = () => {
+        const video = videoElementRef.current;
+        if (!video) return;
+
+        if (!hasInteracted) {
+            setHasInteracted(true);
+            video.muted = false;
+            const playPromise = video.play();
+            if (playPromise && typeof playPromise.catch === "function") {
+                playPromise.catch(() => { });
+            }
+        }
+    };
 
     return (
         <section
@@ -54,7 +97,6 @@ export default function DeepQuestionnairePage() {
                 </header>
 
                 <div className="grid gap-8 mt-8 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:items-start">
-
                     <motion.div
                         ref={videoRef}
                         style={{ opacity: videoOpacity }}
@@ -69,14 +111,22 @@ export default function DeepQuestionnairePage() {
                         />
                         <div className="relative w-full h-full overflow-hidden rounded-2xl bg-white/95 border border-[rgba(124,232,106,0.35)] shadow-[0_12px_40px_rgba(15,23,42,0.12)]">
                             <video
+                                ref={videoElementRef}
                                 className="object-cover w-full h-full"
                                 src="/videos/easytax-intro2.mp4"
-                                controls
+                                autoPlay
+                                muted={!hasInteracted}
                                 playsInline
+                                controls
+                                onClick={handleUserInteract}
+                                onTouchStart={handleUserInteract}
+                                onVolumeChange={handleUserInteract}
+                                onPlay={handleUserInteract}
                             />
                             <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/15 via-transparent to-transparent" />
                         </div>
                     </motion.div>
+
                     <motion.div
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}

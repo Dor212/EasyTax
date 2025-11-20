@@ -29,17 +29,25 @@ const Header: React.FC = () => {
                     : "bg-white/70 border-b border-white/60 shadow-none"
                 } backdrop-blur-md`}
         >
-            <div className="flex items-center justify-between max-w-6xl gap-3 px-4 py-2.5 mx-auto">
+            <div className="relative flex items-center justify-between max-w-6xl gap-3 px-4 py-2.5 mx-auto">
                 <button
                     type="button"
                     onClick={() => handleNavClick("/#home")}
-                    className="flex items-center gap-2 text-right"
+                    className="z-10 flex items-center gap-2 text-right"
                 >
                     <img
                         src="/ETLogo1.png"
                         alt="EasyTax Logo"
                         className="object-contain w-auto h-8"
                     />
+                </button>
+
+                <button
+                    type="button"
+                    onClick={() => handleNavClick("/questionnaire-deep")}
+                    className="md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 inline-flex items-center justify-center px-4 py-1.5 text-[12px] font-extrabold rounded-full text-white bg-gradient-to-r from-[#5BA14D] to-[#7CE86A] shadow-[0_0_18px_rgba(91,161,77,0.65)] hover:shadow-[0_0_24px_rgba(91,161,77,0.8)] active:scale-[0.98] transition-all max-w-[60%] whitespace-nowrap"
+                >
+                    שאלון זכאות מעמיק
                 </button>
 
                 <nav className="items-center hidden gap-6 md:flex">
@@ -66,8 +74,7 @@ const Header: React.FC = () => {
                     </button>
                 </nav>
 
-                <div className="flex items-center gap-3">
-                    {/* כפתור לשאלון המעמיק – שניוני, outlined */}
+                <div className="z-10 flex items-center gap-3">
                     <button
                         type="button"
                         onClick={() => handleNavClick("/questionnaire-deep")}
@@ -132,13 +139,6 @@ const Header: React.FC = () => {
                             className="py-2 text-sm text-[color:var(--text)]/85"
                         >
                             שאלות ותשובות
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => handleNavClick("/questionnaire-deep")}
-                            className="py-2 text-sm text-[color:var(--text)]/85"
-                        >
-                            שאלון זכאות מעמיק
                         </button>
                         <button
                             type="button"

@@ -5,6 +5,18 @@ import type { Variants } from "framer-motion";
 const ACCENT = "#7CE86A" as const;
 const TEXT = "#3A3A4A" as const;
 
+const GLOW_LINE_H = {
+    background:
+        "linear-gradient(90deg, rgba(124,232,106,0) 0%, rgba(124,232,106,0.95) 50%, rgba(124,232,106,0) 100%)",
+    boxShadow: "0 0 18px rgba(124,232,106,0.85)",
+};
+
+const GLOW_LINE_V = {
+    background:
+        "linear-gradient(180deg, rgba(124,232,106,0) 0%, rgba(124,232,106,0.95) 50%, rgba(124,232,106,0) 100%)",
+    boxShadow: "0 0 18px rgba(124,232,106,0.85)",
+};
+
 type EligibilitySectionProps = {
     id?: string;
     className?: string;
@@ -145,13 +157,82 @@ function TimelineCircleStat({
             >
                 {label}
                 <motion.span
-                    className="absolute left-1/2 -translate-x-1/2 bottom-[-4px] h-[2px] rounded-full"
-                    style={{ background: ACCENT, width: "50%", opacity: 0.85 }}
+                    className="absolute left-1/2 -translate-x-1/2 bottom-[-5px] h-[3px] rounded-full"
+                    style={{ ...GLOW_LINE_H, width: "55%" }}
                     initial={{ scaleX: 0 }}
                     animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
                     transition={{ duration: 0.7, ease: easeCurve }}
                 />
             </motion.div>
+        </motion.div>
+    );
+}
+
+type BigStatProps = {
+    label: string;
+    prefix?: string;
+    suffix?: string;
+    target: number;
+    index: number;
+    duration?: number;
+};
+
+function TimelineBigStat({
+    label,
+    prefix,
+    suffix,
+    target,
+    index,
+    duration = 2000,
+}: BigStatProps) {
+    const ref = useRef<HTMLDivElement | null>(null);
+    const inView = useInView(ref, { amount: 0.4 });
+    const value = useCountUp(target, inView, duration);
+
+    return (
+        <motion.div
+            ref={ref}
+            className="relative flex flex-col items-center py-8 text-center"
+            variants={fadeUp}
+            custom={index}
+        >
+            <motion.div
+                className="font-mono text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl"
+                style={{
+                    color: "rgba(241,243,194,0.95)",      
+                    WebkitTextStroke: "1.2px rgba(124,232,106,0.95)", 
+                    textShadow:
+                        "0 0 8px rgba(124,232,106,0.9), 0 0 18px rgba(124,232,106,0.75), 0 0 36px rgba(124,232,106,0.5)",
+                    filter: "drop-shadow(0 0 10px rgba(124,232,106,0.9))",
+                }}
+                initial={{ opacity: 0, y: 6 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
+                transition={{ duration: 0.6, ease: easeCurve }}
+            >
+                {prefix}
+                {formatNumber(value)}
+                {suffix}
+            </motion.div>
+
+
+
+            <motion.div
+                className="mt-3 h-[3px] w-44 sm:w-60 md:w-72 rounded-full"
+                style={{ ...GLOW_LINE_H, transformOrigin: "center" }}
+                initial={{ scaleX: 0 }}
+                animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
+                transition={{ duration: 0.8, ease: easeCurve, delay: 0.1 }}
+            />
+
+            <motion.p
+                className="mt-4 font-[Heebo] text-[14px] sm:text-[15px] leading-7 font-semibold max-w-2xl"
+                style={{ color: TEXT }}
+                initial={{ opacity: 0, y: 6 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
+                transition={{ duration: 0.6, ease: easeCurve, delay: 0.15 }}
+            >
+                {label}
+            </motion.p>
         </motion.div>
     );
 }
@@ -175,15 +256,6 @@ export default function EligibilitySection({
                     variants={fadeUp}
                     custom={0}
                 >
-                    <span
-                        className="inline-flex items-center px-4 py-1 text-xs font-medium tracking-wide rounded-full"
-                        style={{
-                            backgroundColor: "rgba(124,232,106,0.12)",
-                            color: ACCENT,
-                        }}
-                    >
-                        המספרים שמדברים בעד עצמם
-                    </span>
                 </motion.div>
 
                 <motion.div
@@ -196,10 +268,7 @@ export default function EligibilitySection({
                 >
                     <motion.div
                         className="absolute left-1/2 -translate-x-1/2 top-0 w-[2px] h-full rounded-full"
-                        style={{
-                            background: "rgba(124,232,106,0.45)",
-                            transformOrigin: "center top",
-                        }}
+                        style={{ ...GLOW_LINE_V, transformOrigin: "center top" }}
                         initial={{ scaleY: 0 }}
                         whileInView={{ scaleY: 1 }}
                         viewport={{ once: true, amount: 0.6 }}
@@ -227,12 +296,12 @@ export default function EligibilitySection({
                             label="ממוצע החזר מס ללקוח"
                             duration={2100}
                         />
-                        <TimelineCircleStat
+                        <TimelineBigStat
                             index={3}
-                            target={670}
-                            suffix="M"
-                            label="מס ששולם ביתר ולא הוחזר לאזרחים"
-                            duration={2100}
+                            target={670000000}
+                            suffix="₪"
+                            label='על פי דו״ח מבקר המדינה, זה הסכום הממוצע שמצטבר בקופת המדינה בכל שנה ולא מוחזר לאזרחים.'
+                            duration={2200}
                         />
                     </div>
                 </motion.div>
@@ -307,17 +376,12 @@ export default function EligibilitySection({
                                 </span>
                                 <span
                                     className="absolute inset-x-0 bottom-[1px] h-[3px] rounded-full"
-                                    style={{
-                                        background:
-                                            "linear-gradient(90deg, rgba(124,232,106,0) 0%, rgba(124,232,106,0.95) 50%, rgba(124,232,106,0) 100%)",
-                                        boxShadow: "0 0 18px rgba(124,232,106,0.85)",
-                                    }}
+                                    style={GLOW_LINE_H}
                                 />
                             </span>
                             <br />
                             להפוך את תהליך החזרי המס לשקוף, נגיש והוגן כדי שכל אחד יקבל בחזרה את כספו בקלות.
                         </motion.p>
-
                     </div>
                 </motion.div>
 

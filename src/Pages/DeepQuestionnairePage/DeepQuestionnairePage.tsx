@@ -61,7 +61,7 @@ export default function DeepQuestionnairePage() {
     return (
         <section
             dir="rtl"
-            className="min-h-screen w-full bg-[rgba(124,232,106,0.04)]"
+            className="min-h-screen w-full bg-[rgba(124,232,106,0.04)] overflow-x-hidden"
         >
             <div className="max-w-6xl px-4 py-16 mx-auto sm:px-6">
                 <header className="mb-10 text-center">
@@ -100,7 +100,7 @@ export default function DeepQuestionnairePage() {
                     <motion.div
                         ref={videoRef}
                         style={{ opacity: videoOpacity }}
-                        className="relative w-full max-w-[420px] mx-auto lg:mx-0 aspect-[9/16]"
+                        className="relative w-full max-w-[420px] mx-auto lg:mx-0 aspect-[9/16] overflow-hidden"
                     >
                         <div
                             className="absolute pointer-events-none -inset-x-6 -inset-y-4 opacity-60 blur-3xl"
@@ -109,22 +109,39 @@ export default function DeepQuestionnairePage() {
                                     "radial-gradient(circle at top, rgba(124,232,106,0.45), transparent 60%)",
                             }}
                         />
-                        <div className="relative w-full h-full overflow-hidden rounded-2xl bg-white/95 border border-[rgba(124,232,106,0.35)] shadow-[0_12px_40px_rgba(15,23,42,0.12)]">
-                            <video
-                                ref={videoElementRef}
-                                className="object-cover w-full h-full"
-                                src="/videos/easytax-intro3.mp4"
-                                autoPlay
-                                muted={!hasInteracted}
-                                playsInline
-                                controls
-                                onClick={handleUserInteract}
-                                onTouchStart={handleUserInteract}
-                                onVolumeChange={handleUserInteract}
-                                onPlay={handleUserInteract}
-                            />
-                            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/15 via-transparent to-transparent" />
-                        </div>
+                        <motion.div
+                            className="relative w-full h-full rounded-2xl p-[8px] shadow-[0_12px_40px_rgba(15,23,42,0.12)]"
+                            style={{
+                                background:
+                                    "linear-gradient(90deg, #5BA14D, #7CE86A, #5BA14D)",
+                                backgroundSize: "200% 200%",
+                            }}
+                            animate={{
+                                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                            }}
+                            transition={{
+                                duration: 4,
+                                repeat: Infinity,
+                                ease: "linear",
+                            }}
+                        >
+                            <div className="relative w-full h-full overflow-hidden rounded-2xl bg-white/95">
+                                <video
+                                    ref={videoElementRef}
+                                    className="object-cover w-full h-full"
+                                    src="/videos/easytax-intro3.mp4"
+                                    autoPlay
+                                    muted={!hasInteracted}
+                                    playsInline
+                                    controls
+                                    onClick={handleUserInteract}
+                                    onTouchStart={handleUserInteract}
+                                    onVolumeChange={handleUserInteract}
+                                    onPlay={handleUserInteract}
+                                />
+                                <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/15 via-transparent to-transparent" />
+                            </div>
+                        </motion.div>
                     </motion.div>
 
                     <motion.div

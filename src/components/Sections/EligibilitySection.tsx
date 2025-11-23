@@ -312,7 +312,8 @@ export default function EligibilitySection({
                             index={3}
                             target={670000000}
                             suffix="₪"
-                            label='על פי דו״ח מבקר המדינה, זה הסכום הממוצע שמצטבר בקופת המדינה בכל שנה ולא מוחזר לאזרחים.'
+                            label='כ - 670,000,000 ש"ח
+על פי דו"ח מבקר המדינה, זה הסכום שמצטבר בקופת המדינה בכל שנה ואינו מוחזר לאזרחים'
                         />
                     </div>
                 </motion.div>
@@ -405,7 +406,7 @@ export default function EligibilitySection({
                     custom={3}
                 >
                     <a
-                        href="#quick-check"
+                        href="#tax-back"
                         className="inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm sm:text-base font-[Heebo] font-semibold shadow-md hover:shadow-lg transition active:scale-[0.98]"
                         style={{
                             backgroundColor: ACCENT,
@@ -413,7 +414,7 @@ export default function EligibilitySection({
                             boxShadow: "0 0 20px rgba(124,232,106,0.6)",
                         }}
                     >
-                        בודקים זכאות תוך דקות
+                        בדקו זכאותכם עכשיו!
                     </a>
                 </motion.div>
             </div>

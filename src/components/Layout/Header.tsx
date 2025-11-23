@@ -33,10 +33,10 @@ const Header: React.FC = () => {
                 <button
                     type="button"
                     onClick={() => handleNavClick("/#home")}
-                    className="z-10 flex items-center gap-2 text-right"
+                    className="z-10 flex items-center gap-2 -mr-2 text-right shrink-0"
                 >
                     <img
-                        src="/ETLogo1.png"
+                        src="/ETLogo2.png"
                         alt="EasyTax Logo"
                         className="object-contain w-auto h-8"
                     />

@@ -200,7 +200,7 @@ export default function HowItWorksSection({
                             color: ACCENT,
                         }}
                     >
-                        תהליך EasyTax בקצרה
+                        התהליך עם EasyTax בקצרה
                     </span>
 
                     <motion.h2
@@ -264,7 +264,7 @@ export default function HowItWorksSection({
                             boxShadow: "0 0 20px rgba(124,232,106,0.6)",
                         }}
                     >
-                        מתחילים בבדיקת זכאות
+                        לחצו כאן לבדיקת הזכאות!
                     </a>
                 </motion.div>
             </div>

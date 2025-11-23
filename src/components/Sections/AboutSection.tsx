@@ -25,7 +25,7 @@ const fadeUp: Variants = {
 export default function AboutSection({
     id = "about",
     className = "",
-    logoSrc = `${import.meta.env.BASE_URL}ETLogo1.png`,
+    logoSrc = `${import.meta.env.BASE_URL}ETLogo1.svg`,
 }: AboutSectionProps) {
     const circleWrapperRef = useRef<HTMLDivElement | null>(null);
     const circleInView = useInView(circleWrapperRef, { amount: 0.6 });
@@ -109,6 +109,7 @@ export default function AboutSection({
 
                     <div className="w-full max-w-xl">
                         <motion.h1
+                            id="tax-back"
                             className="font-[Heebo] text-2xl sm:text-3xl md:text-4xl leading-tight text-center"
                             style={{ color: bodyColor }}
                             initial="hidden"
@@ -165,6 +166,7 @@ export default function AboutSection({
                         </motion.h1>
 
                         <motion.p
+                        
                             className="font-[Heebo] mt-4 text-[15px] sm:text-base leading-8 text-center font-medium"
                             style={{ color: bodyColor }}
                             initial="hidden"

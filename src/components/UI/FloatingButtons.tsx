@@ -61,8 +61,9 @@ export default function FloatingButtons() {
                             className="mb-3 text-sm font-semibold"
                             style={{ color: TEXT }}
                         >
-                            מייצגים מורשים של<br />
-                            מס הכנסה והביטוח הלאומי
+                            מייצגים מורשים
+                            <br/>
+                            במס הכנסה ובביטוח הלאומי
                         </p>
 
                         <div className="flex items-center justify-center gap-4 mb-2">

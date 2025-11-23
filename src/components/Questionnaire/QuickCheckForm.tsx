@@ -224,8 +224,8 @@ export default function QuickCheckForm() {
                                             setSalaryRange(opt.id)
                                         }
                                         className={`w-full rounded-xl border px-3 py-2.5 text-sm text-center transition ${active
-                                                ? "text-white"
-                                                : "text-gray-800 bg-white hover:bg-[rgba(124,232,106,0.06)]"
+                                            ? "text-white"
+                                            : "text-gray-800 bg-white hover:bg-[rgba(124,232,106,0.06)]"
                                             }`}
                                         style={{
                                             borderColor: active
@@ -284,8 +284,8 @@ export default function QuickCheckForm() {
                                                 )
                                             }
                                             className={`w-full rounded-xl border px-3 py-2.5 text-sm text-center transition ${active
-                                                    ? "text-white"
-                                                    : "text-gray-800 bg-white hover:bg-[rgba(124,232,106,0.06)]"
+                                                ? "text-white"
+                                                : "text-gray-800 bg-white hover:bg-[rgba(124,232,106,0.06)]"
                                                 }`}
                                             style={{
                                                 borderColor: active
@@ -324,8 +324,8 @@ export default function QuickCheckForm() {
                                                 toggleBenefit(opt.id)
                                             }
                                             className={`w-full rounded-xl border px-3 py-2 text-xs sm:text-sm text-center transition ${active
-                                                    ? "text-white"
-                                                    : "text-gray-800 bg-white hover:bg-[rgba(124,232,106,0.06)]"
+                                                ? "text-white"
+                                                : "text-gray-800 bg-white hover:bg-[rgba(124,232,106,0.06)]"
                                                 }`}
                                             style={{
                                                 borderColor: active

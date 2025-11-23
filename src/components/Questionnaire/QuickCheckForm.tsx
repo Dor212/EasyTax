@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
+import { FaWhatsapp } from "react-icons/fa";
 
 const accentGlow = "#7CE86A" as const;
 const bodyColor = "#3A3A4A" as const;
@@ -16,6 +17,8 @@ const fadeUp: Variants = {
 };
 
 type Step = 1 | 2 | 3 | 4;
+
+const WHATSAPP_NUMBER = "972526134057";
 
 export default function QuickCheckForm() {
     const [step, setStep] = useState<Step>(1);
@@ -38,7 +41,7 @@ export default function QuickCheckForm() {
         { id: "unemployment", label: "דמי אבטלה" },
         { id: "maternity", label: "דמי לידה" },
         { id: "military", label: "מילואים" },
-        { id: "halat", label: "חל\"ת" },
+        { id: "halat", label: 'חל"ת' },
     ];
 
     const toggleBenefit = (id: string) => {
@@ -51,25 +54,6 @@ export default function QuickCheckForm() {
     const isStep2Valid = !!salaryRange;
     const isStep3Valid = !!changedJob;
 
-    const normalizePhoneToWhatsapp = (rawPhone: string) => {
-        // משאיר רק ספרות
-        const digits = rawPhone.replace(/\D/g, "");
-        if (!digits) return null;
-
-        // אם מתחיל ב-0 (ישראל)
-        if (digits.startsWith("0")) {
-            return `whatsapp:+972${digits.slice(1)}`;
-        }
-
-        // אם כבר כתבו 972...
-        if (digits.startsWith("972")) {
-            return `whatsapp:+${digits}`;
-        }
-
-        // fallback גנרי
-        return `whatsapp:+${digits}`;
-    };
-
     const sendFormToServer = async () => {
         try {
             setIsSending(true);
@@ -77,11 +61,6 @@ export default function QuickCheckForm() {
 
             const apiUrl =
                 import.meta.env.VITE_API_URL || "http://localhost:5000";
-
-            const whatsappTo = normalizePhoneToWhatsapp(phone);
-            if (!whatsappTo) {
-                throw new Error("מספר הטלפון לא תקין");
-            }
 
             const res = await fetch(`${apiUrl}/api/forms`, {
                 method: "POST",
@@ -92,12 +71,7 @@ export default function QuickCheckForm() {
                     site: "EasyTax",
                     formType: "questionnaire-lead",
                     notify: {
-                        // מייל של הלידים של איזיטאקס
                         emailTo: "Easy.tax.il123@gmail.com",
-                        // מספר הוואטסאפ השולח – כרגע הסנדבוקס שלך/מספר העסק ב-Twilio
-                        whatsappFrom: "whatsapp:+14155238886",
-                        // למי שולחים – ללקוח שמילא את הטופס
-                        whatsappTo,
                     },
                     data: {
                         fullName,
@@ -119,7 +93,11 @@ export default function QuickCheckForm() {
         } catch (err: unknown) {
             console.error("❌ שגיאה בשליחה:", err);
             const message =
-                err instanceof Error ? err.message : typeof err === "string" ? err : "שגיאה בלתי צפויה בשליחת הטופס";
+                err instanceof Error
+                    ? err.message
+                    : typeof err === "string"
+                        ? err
+                        : "שגיאה בלתי צפויה בשליחת הטופס";
             setError(message);
         } finally {
             setIsSending(false);
@@ -130,6 +108,19 @@ export default function QuickCheckForm() {
         if (!isStep3Valid) return;
         await sendFormToServer();
         setStep(4);
+    };
+
+    const buildWhatsappLink = () => {
+        const msg = `שלום, קוראים לי ${fullName || "—"}.
+סיימתי עכשיו את שאלון הזכאות באתר EasyTax.
+הטלפון שלי: ${phone || "—"}.
+אשמח לשיחה עם נציג להמשך טיפול. תודה!`;
+        return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    };
+
+    const openWhatsapp = () => {
+        const link = buildWhatsappLink();
+        window.open(link, "_blank");
     };
 
     return (
@@ -179,7 +170,7 @@ export default function QuickCheckForm() {
                                     onChange={(e) =>
                                         setFullName(e.target.value)
                                     }
-                                    className="w-full rounded-xl border border-[#d1d5db] bg:white px-3 py-2.5 text-sm text-center outline-none focus:border-[rgba(124,232,106,0.9)] focus:ring-1 focus:ring-[rgba(124,232,106,0.4)]"
+                                    className="w-full rounded-xl border border-[#d1d5db] bg-white px-3 py-2.5 text-sm text-center outline-none focus:border-[rgba(124,232,106,0.9)] focus:ring-1 focus:ring-[rgba(124,232,106,0.4)]"
                                     placeholder="לדוגמה: נטע ישראלי"
                                 />
                             </div>
@@ -193,7 +184,7 @@ export default function QuickCheckForm() {
                                     onChange={(e) =>
                                         setPhone(e.target.value)
                                     }
-                                    className="w-full rounded-xl border border-[#d1d5db] bg:white px-3 py-2.5 text-sm text-center outline-none focus:border-[rgba(124,232,106,0.9)] focus:ring-1 focus:ring-[rgba(124,232,106,0.4)]"
+                                    className="w-full rounded-xl border border-[#d1d5db] bg-white px-3 py-2.5 text-sm text-center outline-none focus:border-[rgba(124,232,106,0.9)] focus:ring-1 focus:ring-[rgba(124,232,106,0.4)]"
                                     placeholder="לדוגמה: 050-1234567"
                                 />
                             </div>
@@ -372,7 +363,7 @@ export default function QuickCheckForm() {
                 )}
 
                 {step === 4 && (
-                    <div className="flex flex-col items-center gap-3 py-2 text-center">
+                    <div className="flex flex-col items-center gap-4 py-2 text-center">
                         <div
                             className="flex items-center justify-center rounded-full h-14 w-14"
                             style={{
@@ -394,6 +385,24 @@ export default function QuickCheckForm() {
                                 נציגינו יחזרו אליך בהקדם להמשך תהליך החזר המס.
                             </p>
                         </div>
+
+                        <button
+                            type="button"
+                            onClick={openWhatsapp}
+                            className="mt-1 inline-flex items-center justify-center gap-2 w-full rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition"
+                            style={{
+                                background: accentGlow,
+                                boxShadow:
+                                    "0 0 20px rgba(124, 232, 106, 0.6)",
+                            }}
+                        >
+                            <FaWhatsapp className="text-lg" />
+                            לשיחה עם נציג בוואטסאפ
+                        </button>
+
+                        <p className="text-[11px] sm:text-xs text-gray-500">
+                            בלחיצה תיפתח שיחה מוכנה עם נציג EasyTax
+                        </p>
                     </div>
                 )}
             </div>

@@ -166,21 +166,21 @@ function TimelineCircleStat({
     );
 }
 
-type BigStatProps = {
-    label: string;
-    prefix?: string;
-    suffix?: string;
-    target: number;
+type InlineStatProps = {
     index: number;
+    target: number;
+    prefixText?: string;
+    suffixText?: string;
+    textAfter: string;
 };
 
-function TimelineBigStat({
-    label,
-    prefix,
-    suffix,
-    target,
+function TimelineInlineStat({
     index,
-}: BigStatProps) {
+    target,
+    prefixText = "כ-",
+    suffixText = "₪",
+    textAfter,
+}: InlineStatProps) {
     const ref = useRef<HTMLDivElement | null>(null);
     const inView = useInView(ref, { amount: 0.4 });
     const value = useCountUp(target, inView, COUNTUP_MS);
@@ -188,57 +188,43 @@ function TimelineBigStat({
     return (
         <motion.div
             ref={ref}
-            className="relative flex flex-col items-center py-8 text-center"
+            className="relative flex flex-col items-center py-6 text-center"
             variants={fadeUp}
             custom={index}
         >
-            <motion.div
-                dir="ltr"
-                className="relative inline-flex items-center justify-center px-6 py-4 rounded-2xl bg-[rgba(124,232,106,0.08)] backdrop-blur-[6px] shadow-[inset_0_0_14px_rgba(124,232,106,0.14),0_0_22px_rgba(124,232,106,0.22)]"
-                style={{ direction: "ltr", unicodeBidi: "isolate" }}
+            <motion.p
+                className="font-[Heebo] text-[14px] sm:text-[15px] leading-7 font-semibold max-w-2xl"
+                style={{ color: TEXT }}
                 initial={{ opacity: 0, y: 6 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
                 transition={{ duration: 0.6, ease: easeCurve }}
             >
-                <div
-                    className="absolute inset-0 pointer-events-none rounded-2xl opacity-30"
-                    style={{
-                        background:
-                            "radial-gradient(circle at 25% 15%, rgba(124,232,106,0.20), transparent 60%), radial-gradient(circle at 75% 85%, rgba(124,232,106,0.16), transparent 65%)",
-                    }}
-                />
+                {prefixText}
                 <span
-                    className="relative z-10 font-[Heebo] tabular-nums text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl"
+                    dir="ltr"
+                    className="inline-block mx-1 px-2 py-[2px] rounded-lg bg-[rgba(124,232,106,0.10)] font-mono tabular-nums font-extrabold text-[17px] sm:text-[19px] md:text-[21px]"
                     style={{
-                        color: "rgba(124,232,106,0.78)",
-                        WebkitTextStroke: "0.7px rgba(58,58,58,0.55)",
+                        color: "rgba(124,232,106,0.9)",
+                        WebkitTextStroke: "0.6px rgba(58,58,58,0.55)",
                         textShadow:
-                            "0 0 6px rgba(124,232,106,0.28), 0 0 14px rgba(124,232,106,0.18)",
+                            "0 0 6px rgba(124,232,106,0.24), 0 0 14px rgba(124,232,106,0.16)",
+                        direction: "ltr",
+                        unicodeBidi: "isolate",
                     }}
                 >
-                    {prefix}
                     {formatNumber(value)}
-                    {suffix}
+                    {suffixText}
                 </span>
-            </motion.div>
+                {textAfter}
+            </motion.p>
 
             <motion.div
                 className="mt-4 h-[3px] w-52 sm:w-64 md:w-72 rounded-full"
                 style={{ ...GLOW_LINE_H, transformOrigin: "center" }}
                 initial={{ scaleX: 0 }}
                 animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
-                transition={{ duration: 0.8, ease: easeCurve, delay: 0.1 }}
+                transition={{ duration: 0.8, ease: easeCurve, delay: 0.05 }}
             />
-
-            <motion.p
-                className="mt-4 font-[Heebo] text-[14px] sm:text-[15px] leading-7 font-semibold max-w-2xl"
-                style={{ color: TEXT }}
-                initial={{ opacity: 0, y: 6 }}
-                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
-                transition={{ duration: 0.6, ease: easeCurve, delay: 0.15 }}
-            >
-                {label}
-            </motion.p>
         </motion.div>
     );
 }
@@ -308,12 +294,11 @@ export default function EligibilitySection({
                             suffix="₪"
                             label="ממוצע החזר מס ללקוח"
                         />
-                        <TimelineBigStat
+                        <TimelineInlineStat
                             index={3}
                             target={670000000}
-                            suffix="₪"
-                            label='כ - 670,000,000 ש"ח
-על פי דו"ח מבקר המדינה, זה הסכום שמצטבר בקופת המדינה בכל שנה ואינו מוחזר לאזרחים'
+                            suffixText="₪"
+                            textAfter=' על פי דו"ח מבקר המדינה, זה הסכום שמצטבר בקופת המדינה בכל שנה ואינו מוחזר לאזרחים'
                         />
                     </div>
                 </motion.div>

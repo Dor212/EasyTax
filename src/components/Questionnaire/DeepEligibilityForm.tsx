@@ -103,9 +103,10 @@ export default function DeepEligibilityForm() {
             if (!res.ok || (json && json.ok === false)) {
                 throw new Error((json && json.message) || `Server responded ${res.status}`);
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error("❌ Deep form submit error:", err);
-            setError(err?.message || "אירעה תקלה בשליחה. נסה שוב בעוד רגע.");
+            const msg = err instanceof Error ? err.message : (typeof err === "string" ? err : JSON.stringify(err) || "");
+            setError(msg || "אירעה תקלה בשליחה. נסה שוב בעוד רגע.");
             return false;
         } finally {
             setIsSending(false);

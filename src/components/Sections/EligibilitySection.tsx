@@ -169,18 +169,9 @@ function TimelineCircleStat({
 type InlineStatProps = {
     index: number;
     target: number;
-    prefixText?: string;
-    suffixText?: string;
-    textAfter: string;
 };
 
-function TimelineInlineStat({
-    index,
-    target,
-    prefixText = "כ-",
-    suffixText = "₪",
-    textAfter,
-}: InlineStatProps) {
+function TimelineInlineStat({ index, target }: InlineStatProps) {
     const ref = useRef<HTMLDivElement | null>(null);
     const inView = useInView(ref, { amount: 0.4 });
     const value = useCountUp(target, inView, COUNTUP_MS);
@@ -199,23 +190,37 @@ function TimelineInlineStat({
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
                 transition={{ duration: 0.6, ease: easeCurve }}
             >
-                {prefixText}
                 <span
-                    dir="ltr"
-                    className="inline-block mx-1 px-2 py-[2px] rounded-lg bg-[rgba(124,232,106,0.10)] font-mono tabular-nums font-extrabold text-[17px] sm:text-[19px] md:text-[21px]"
+                    className="inline-block leading-8"
                     style={{
-                        color: "rgba(124,232,106,0.9)",
-                        WebkitTextStroke: "0.6px rgba(58,58,58,0.55)",
+                        color: ACCENT,
+                        fontWeight: 800,
                         textShadow:
                             "0 0 6px rgba(124,232,106,0.24), 0 0 14px rgba(124,232,106,0.16)",
-                        direction: "ltr",
-                        unicodeBidi: "isolate",
                     }}
                 >
-                    {formatNumber(value)}
-                    {suffixText}
+                    {"כ-"}
+                    <span
+                        dir="ltr"
+                        className="inline-block mx-1 px-2 py-[2px] rounded-lg bg-[rgba(124,232,106,0.10)] font-mono tabular-nums text-[17px] sm:text-[19px] md:text-[21px]"
+                        style={{
+                            color: "rgba(124,232,106,0.9)",
+                            WebkitTextStroke: "0.6px rgba(58,58,58,0.55)",
+                            textShadow:
+                                "0 0 6px rgba(124,232,106,0.24), 0 0 14px rgba(124,232,106,0.16)",
+                            direction: "ltr",
+                            unicodeBidi: "isolate",
+                        }}
+                    >
+                        {formatNumber(value)}
+                        {"₪"}
+                    </span>
+                    {" על פי דו\"ח מבקר המדינה"}
                 </span>
-                {textAfter}
+                <br />
+                <span className="text-[13px] sm:text-[14px] font-normal">
+                    זה הסכום שמצטבר בקופת המדינה בכל שנה ואינו מוחזר לאזרחים
+                </span>
             </motion.p>
 
             <motion.div
@@ -297,8 +302,6 @@ export default function EligibilitySection({
                         <TimelineInlineStat
                             index={3}
                             target={670000000}
-                            suffixText="₪"
-                            textAfter=' על פי דו"ח מבקר המדינה, זה הסכום שמצטבר בקופת המדינה בכל שנה ואינו מוחזר לאזרחים'
                         />
                     </div>
                 </motion.div>
@@ -349,7 +352,8 @@ export default function EligibilitySection({
                             variants={fadeUp}
                             custom={3}
                         >
-                            הקמנו את EasyTax מתוך רצון אמיתי לעזור לאנשים לקבל את הכסף שמגיע להם מהמדינה.
+                            הקמנו את EasyTax מתוך רצון אמיתי לעזור לאנשים לקבל
+                            את הכסף שמגיע להם מהמדינה.
                         </motion.p>
 
                         <motion.p
@@ -358,7 +362,8 @@ export default function EligibilitySection({
                             variants={fadeUp}
                             custom={4}
                         >
-                            ראינו איך רבים משלמים מס ביתר, בלי לדעת מה מגיע להם ונתקעים מול בירוקרטיה מסובכת ומתישה.
+                            ראינו איך רבים משלמים מס ביתר, בלי לדעת מה מגיע להם
+                            ונתקעים מול בירוקרטיה מסובכת ומתישה.
                         </motion.p>
 
                         <motion.p
@@ -377,7 +382,8 @@ export default function EligibilitySection({
                                 />
                             </span>
                             <br />
-                            להפוך את תהליך החזרי המס לשקוף, נגיש והוגן כדי שכל אחד יקבל בחזרה את כספו בקלות.
+                            להפוך את תהליך החזרי המס לשקוף, נגיש והוגן כדי שכל
+                            אחד יקבל בחזרה את כספו בקלות.
                         </motion.p>
                     </div>
                 </motion.div>

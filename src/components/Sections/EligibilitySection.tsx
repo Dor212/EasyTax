@@ -215,7 +215,18 @@ function TimelineInlineStat({ index, target }: InlineStatProps) {
                         {formatNumber(value)}
                         {"₪"}
                     </span>
-                    {" על פי דו\"ח מבקר המדינה"}
+                    <span
+                        className="inline-block"
+                        style={{
+                            marginInlineStart: 4,
+                            color: "rgba(124,232,106,0.9)",
+                            WebkitTextStroke: "0.6px rgba(58,58,58,0.55)",
+                            textShadow:
+                                "0 0 6px rgba(124,232,106,0.24), 0 0 14px rgba(124,232,106,0.16)",
+                        }}
+                    >
+                        {"על פי דו\"ח מבקר המדינה"}
+                    </span>
                 </span>
                 <br />
                 <span className="text-[13px] sm:text-[14px] font-normal">

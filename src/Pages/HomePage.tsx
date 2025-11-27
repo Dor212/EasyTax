@@ -35,7 +35,7 @@ export type HomePageProps = {
     logoSrc?: string;
 };
 
-export default function HomePage({ logoSrc = "/ETLogo.png" }: HomePageProps) {
+export default function HomePage({ logoSrc = "/ETLogo1.png" }: HomePageProps) {
     const SITE_URL = "https://www.easytax.co.il";
     const SITE_NAME = "EasyTax";
     const OG_IMAGE = `${SITE_URL}/og-easytax.jpg`;

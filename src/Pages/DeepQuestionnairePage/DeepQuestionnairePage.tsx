@@ -129,7 +129,7 @@ export default function DeepQuestionnairePage() {
                                 <video
                                     ref={videoElementRef}
                                     className="object-cover w-full h-full"
-                                    src="/videos/easytax-intro3.mp4"
+                                    src="/videos/easytax-intro1.mp4"
                                     autoPlay
                                     muted={!hasInteracted}
                                     playsInline

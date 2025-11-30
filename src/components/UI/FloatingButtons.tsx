@@ -48,11 +48,14 @@ export default function FloatingButtons() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 40 }}
                         transition={{ duration: 0.4 }}
-                        className="relative bg-white rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.15)] border border-[rgba(124,232,106,0.4)] px-4 py-3 flex flex-col items-center text-center w-72 sm:w-80"
+                        // כאן הדגש – מוודאים position לא סטטי
+                        style={{ position: "relative" }}
+                        className="bg-white rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.15)] border border-[rgba(124,232,106,0.4)] px-4 py-3 flex flex-col items-center text-center w-72 sm:w-80"
                     >
                         <button
                             onClick={() => setShowAuthorized(false)}
                             className="absolute text-gray-400 top-2 left-2 hover:text-gray-600"
+                            aria-label="סגירת חלון מייצגים"
                         >
                             <IoMdClose size={20} />
                         </button>
@@ -62,7 +65,7 @@ export default function FloatingButtons() {
                             style={{ color: TEXT }}
                         >
                             מייצגים מורשים
-                            <br/>
+                            <br />
                             במס הכנסה ובביטוח הלאומי
                         </p>
 
@@ -82,7 +85,6 @@ export default function FloatingButtons() {
                 )}
             </AnimatePresence>
 
-            {/* כפתור פתיחה מחדש */}
             {!showAuthorized && (
                 <motion.button
                     onClick={() => setShowAuthorized(true)}

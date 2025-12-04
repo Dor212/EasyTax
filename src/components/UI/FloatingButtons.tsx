@@ -20,7 +20,6 @@ export default function FloatingButtons() {
 
     return (
         <div className="fixed bottom-6 right-4 sm:bottom-8 sm:right-6 z-[60] flex flex-col items-end gap-3">
-            {/* כפתור חזור למעלה */}
             <AnimatePresence>
                 {showScroll && (
                     <motion.button
@@ -40,7 +39,6 @@ export default function FloatingButtons() {
                 )}
             </AnimatePresence>
 
-            {/* חלון המייצגים */}
             <AnimatePresence>
                 {showAuthorized && (
                     <motion.div
@@ -48,7 +46,6 @@ export default function FloatingButtons() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 40 }}
                         transition={{ duration: 0.4 }}
-                        // כאן הדגש – מוודאים position לא סטטי
                         style={{ position: "relative" }}
                         className="bg-white rounded-2xl shadow-[0_18px_50px_rgba(0,0,0,0.15)] border border-[rgba(124,232,106,0.4)] px-4 py-3 flex flex-col items-center text-center w-72 sm:w-80"
                     >

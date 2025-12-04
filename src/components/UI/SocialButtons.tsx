@@ -1,18 +1,24 @@
 import React from "react";
 import { FaWhatsapp, FaPhoneAlt, FaInstagram } from "react-icons/fa";
 
-const ACCENT = "#5BA14D"; 
+const ACCENT = "#5BA14D";
 
 const FloatingActions: React.FC = () => {
-    const whatsappNumber = "972502018741";
-    const phoneNumber = "03-XXXXXXX"; 
-    const instagramLink = "https://www.instagram.com/easy.tax.il/"; 
+    const whatsappNumber = "972526134057";
+    const phoneNumber = "972526134057";
+    const instagramLink = "https://www.instagram.com/easy.tax.il/";
+
+    const whatsappMessage =
+        "היי, הגעתי דרך אתר EasyTax ואני רוצה לבדוק זכאות להחזר מס 🙂";
+
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+        whatsappMessage
+    )}`;
 
     return (
         <div className="fixed flex flex-col gap-3 right-4 sm:right-6 top-[100px] z-40">
-       
             <a
-                href={`https://wa.me/${whatsappNumber}`}
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center transition-transform border rounded-full shadow-md w-11 h-11 hover:scale-110 bg-white/80 backdrop-blur-sm"
